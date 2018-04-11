@@ -1,3 +1,4 @@
+import Models.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -7,6 +8,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 public class Controller  {
+
 
     @FXML
     private TextField username_field;
@@ -48,7 +50,7 @@ public class Controller  {
     public void Create_account_button2Clicked(){
 
 
-        if(name_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")){
+        if(name_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9 ]*")){
             if(name_field.getText().length()<1){
                 create_account_info.setText("Name can't be" + System.getProperty("line.separator") +  "empty!");
                 return;
@@ -79,6 +81,7 @@ public class Controller  {
             return;
         }
 
+        Main.dummyData.createNewUser(name_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
         Main.stage.setScene(Main.loginScreen);
 
     }
@@ -93,6 +96,17 @@ public class Controller  {
                     if(password_field.getText().length()<1){
                         info_text.setText("Password can't be" + System.getProperty("line.separator") +  "empty!");
                     }
+
+                    for(User user : Main.dummyData.getUsers()){
+                        if(user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())){
+                            System.out.println(user.getName() + " logged in");
+                            if(user.isAdmin()){
+                                Main.stage.setScene(Main.adminScreen);
+                            }
+                            Main.stage.setScene(Main.userScreen);
+                        }
+                    }
+                    info_text.setText("Username and password" + System.getProperty("line.separator") +" do not match");
             }
             else {
                 info_text.setText("Password must contain" + System.getProperty("line.separator") +  "only letters!");
