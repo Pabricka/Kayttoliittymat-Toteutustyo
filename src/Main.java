@@ -28,7 +28,6 @@ public class Main extends Application {
         createAccountScreen = new Scene(FXMLLoader.load(getClass().getResource("FXML/create_account_screen.fxml")));
         userScreen = new Scene(FXMLLoader.load(getClass().getResource("FXML/user_screen.fxml")));
         adminScreen = new Scene(FXMLLoader.load(getClass().getResource("FXML/admin_screen.fxml")));
-
         primaryStage.setScene(loginScreen);
         primaryStage.show();
     }

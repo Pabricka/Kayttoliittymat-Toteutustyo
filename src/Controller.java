@@ -83,6 +83,7 @@ public class Controller  {
 
         Main.dummyData.createNewUser(name_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
         Main.stage.setScene(Main.loginScreen);
+        Admin_controller.items.add(create_username_field.getText());
 
     }
 
@@ -101,9 +102,13 @@ public class Controller  {
                         if(user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())){
                             System.out.println(user.getName() + " logged in");
                             if(user.isAdmin()){
+
                                 Main.stage.setScene(Main.adminScreen);
+
                             }
-                            Main.stage.setScene(Main.userScreen);
+                            else {
+                                Main.stage.setScene(Main.userScreen);
+                            }
                         }
                     }
                     info_text.setText("Username and password" + System.getProperty("line.separator") +" do not match");

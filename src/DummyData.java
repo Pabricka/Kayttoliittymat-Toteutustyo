@@ -22,6 +22,7 @@ public class DummyData {
         createNewUser("Kevin M", "Monroe", "ante", false);
         createNewUser("Clare W", "Hammond", "Quisque", false);
         createNewUser("Sonya A", "Hopper", "mollis", false);
+        createNewUser("admin", "a", "a", true);
 
     }
 
