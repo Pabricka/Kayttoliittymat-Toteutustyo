@@ -1,25 +1,23 @@
-import Server.testDummyData;
+import Server.DummyData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+public class Client extends Application {
 
     static Stage stage;
     static Scene loginScreen;
     static Scene createAccountScreen;
     static Scene userScreen;
     static Scene adminScreen;
-
-
-    static testDummyData testDummyData;
-
+    static DummyData dummyData;
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        testDummyData = new testDummyData();
-        testDummyData.initializeDummyData();
 
         primaryStage.setTitle("Log in");
         primaryStage.setResizable(false);
@@ -35,6 +33,15 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
+        String host = (args.length < 1) ? null : args[0];
+        try {
+            Registry registry = LocateRegistry.getRegistry(host);
+            dummyData = (DummyData) registry.lookup("DummyData");
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
         launch(args);
     }
 }

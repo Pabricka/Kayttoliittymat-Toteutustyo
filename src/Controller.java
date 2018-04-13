@@ -6,8 +6,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Controller  {
+
+
 
 
     @FXML
@@ -45,7 +48,7 @@ public class Controller  {
     public void Create_account_buttonClicked() throws IOException {
         info_text.setText("Account created!" + System.getProperty("line.separator") + "You can now log in.");
 
-        Main.stage.setScene(Main.createAccountScreen);
+        Client.stage.setScene(Client.createAccountScreen);
     }
     public void Create_account_button2Clicked(){
 
@@ -81,13 +84,19 @@ public class Controller  {
             return;
         }
 
-        Main.dummyData.createNewUser(name_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
-        Main.stage.setScene(Main.loginScreen);
+        Client.stage.setScene(Client.loginScreen);
         Admin_controller.items.add(create_username_field.getText());
+        try {
+            Client.dummyData.createNewUser(name_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     public void Login_buttonClicked(){
+
 
         if(username_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")){
             if(username_field.getText().length()<1){
@@ -98,18 +107,24 @@ public class Controller  {
                         info_text.setText("Password can't be" + System.getProperty("line.separator") +  "empty!");
                     }
 
-                    for(User user : Main.dummyData.getUsers()){
-                        if(user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())){
+                    try{
+                        ArrayList<User> users =  Client.dummyData.getUsers();
+                    for(User user : users) {
+                        if (user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())) {
                             System.out.println(user.getName() + " logged in");
-                            if(user.isAdmin()){
+                            if (user.isAdmin()) {
 
-                                Main.stage.setScene(Main.adminScreen);
+                                Client.stage.setTitle("Admin");
+                                Client.stage.setScene(Client.adminScreen);
 
-                            }
-                            else {
-                                Main.stage.setScene(Main.userScreen);
+                            } else {
+                                Client.stage.setScene(Client.userScreen);
                             }
                         }
+                    }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
                     }
                     info_text.setText("Username and password" + System.getProperty("line.separator") +" do not match");
             }

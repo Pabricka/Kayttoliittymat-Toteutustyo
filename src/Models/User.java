@@ -1,6 +1,7 @@
 package Models;
 
-public class User {
+
+public class User implements java.io.Serializable{
 
     private String name;
     private String username;
@@ -49,4 +50,6 @@ public class User {
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
+
+
 }

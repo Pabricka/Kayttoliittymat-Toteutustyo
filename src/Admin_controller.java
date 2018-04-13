@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -57,8 +56,12 @@ public class Admin_controller {
 
    @FXML
     public void initialize (){
-       Main.stage.setTitle("Admin");
-          users = Main.dummyData.getUsers();
+       try {
+           users = Client.dummyData.getUsers();
+       }
+       catch (Exception e){
+           e.printStackTrace();
+       }
 
 
         items = FXCollections.observableArrayList();
@@ -85,23 +88,31 @@ public class Admin_controller {
        });
     }
     public void u_buttonClicked(){
-                if(u_button.getText().equals("Edit")){
-                u_button.setText("Ok");
-                u_field.setText(username_text.getText());
-                u_field.setVisible(true);
-                }
 
-            else {
+        if(u_button.getText().equals("Edit")){
+            u_button.setText("Ok");
+            u_field.setText(username_text.getText());
+            u_field.setVisible(true);
+        }
 
-                u_button.setText("Edit");
-                users.get(user_list.getSelectionModel().getSelectedIndex()).setUsername(u_field.getText());
-                username_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername());
-                items.set(user_list.getSelectionModel().getSelectedIndex(),u_field.getText());
-                u_field.setVisible(false);
+        else {
+            u_button.setText("Edit");
+
+            //change the users username in database
+            try {
+                Client.dummyData.changeUsername(user_list.getSelectionModel().getSelectedIndex(), u_field.getText());
+                users = Client.dummyData.getUsers();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+            username_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername());
+            items.set(user_list.getSelectionModel().getSelectedIndex(),u_field.getText());
+            u_field.setVisible(false);
 
             }
-            //TESTIKOODIA
-            System.out.println(Main.dummyData.getUsers().get(user_list.getSelectionModel().getSelectedIndex()).getUsername());
+
 
 
     }
@@ -115,13 +126,21 @@ public class Admin_controller {
         else {
 
             n_button.setText("Edit");
-            users.get(user_list.getSelectionModel().getSelectedIndex()).setName(n_field.getText());
+
+            //change the users name in database
+            try {
+                Client.dummyData.changeName(user_list.getSelectionModel().getSelectedIndex(), n_field.getText());
+                users = Client.dummyData.getUsers();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
             name_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getName());
             n_field.setVisible(false);
 
         }
-        //TESTIKOODIA
-        System.out.println(Main.dummyData.getUsers().get(user_list.getSelectionModel().getSelectedIndex()).getName());
+
 
 
     }
@@ -135,13 +154,18 @@ public class Admin_controller {
         else {
 
             p_button.setText("Edit");
-            users.get(user_list.getSelectionModel().getSelectedIndex()).setPassword(p_field.getText());
+            //change the users password in database
+            try {
+                Client.dummyData.changePassword(user_list.getSelectionModel().getSelectedIndex(), p_field.getText());
+                users = Client.dummyData.getUsers();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
             password_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getPassword());
             p_field.setVisible(false);
 
         }
-        //TESTIKOODIA
-        System.out.println(Main.dummyData.getUsers().get(user_list.getSelectionModel().getSelectedIndex()).getPassword());
 
 
     }
