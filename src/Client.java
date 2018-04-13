@@ -1,3 +1,4 @@
+import Server.testDummyData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,13 +13,13 @@ public class Main extends Application {
     static Scene adminScreen;
 
 
-    static DummyData dummyData;
+    static testDummyData testDummyData;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        dummyData = new DummyData();
-        dummyData.initializeDummyData();
+        testDummyData = new testDummyData();
+        testDummyData.initializeDummyData();
 
         primaryStage.setTitle("Log in");
         primaryStage.setResizable(false);
