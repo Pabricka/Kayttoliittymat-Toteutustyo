@@ -1,3 +1,4 @@
+import Models.Journey;
 import Models.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -5,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -14,9 +16,12 @@ import java.util.ArrayList;
 
 public class Admin_controller {
     ArrayList<User> users;
+    ArrayList<Journey> journeys;
 
    @FXML
     ListView<String> user_list;
+   @FXML
+    ListView<String> journey_list;
 
    @FXML
     Text username_text;
@@ -50,14 +55,23 @@ public class Admin_controller {
    @FXML
     TextField p_field;
 
+   @FXML
+    ComboBox<String> sort_box;
+
+
 
    static ObservableList<String> items;
+   static  ObservableList<String>  journey_items;
 
 
    @FXML
     public void initialize (){
+
+       sort_box.getItems().removeAll(sort_box.getItems());
+       sort_box.getItems().addAll("user","date","connection");
        try {
            users = Client.dummyData.getUsers();
+           journeys = Client.dummyData.getJourneys();
        }
        catch (Exception e){
            e.printStackTrace();
@@ -65,10 +79,16 @@ public class Admin_controller {
 
 
         items = FXCollections.observableArrayList();
+        journey_items = FXCollections.observableArrayList();
         for (User user: users) {
             items.add(user.getUsername());
         }
+        for (Journey journey:journeys){
+            journey_items.add(journey.getStrings());
+        }
         user_list.setItems(items);
+       journey_list.setItems(journey_items);
+
        user_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
            @Override
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -85,7 +105,9 @@ public class Admin_controller {
                p_button.setVisible(true);
 
            }
-       });
+       }
+       );
+
     }
     public void u_buttonClicked(){
 

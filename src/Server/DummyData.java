@@ -1,6 +1,8 @@
 package Server;
 
 
+import Models.Connection;
+import Models.Journey;
 import Models.User;
 
 import java.rmi.Remote;
@@ -14,4 +16,7 @@ public interface DummyData extends Remote {
     void changeName(int i, String s) throws RemoteException;
     void changeUsername(int i, String s) throws RemoteException;
     void changePassword(int i, String s) throws RemoteException;
+    ArrayList<Journey> getJourneys() throws RemoteException;
+
+
 }

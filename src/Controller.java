@@ -112,6 +112,7 @@ public class Controller  {
                     for(User user : users) {
                         if (user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())) {
                             System.out.println(user.getName() + " logged in");
+                            Client.currentUser = user;
                             if (user.isAdmin()) {
 
                                 Client.stage.setTitle("Admin");

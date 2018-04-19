@@ -1,3 +1,4 @@
+import Models.User;
 import Server.DummyData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Client extends Application {
+
+
+    static User currentUser;
 
     static Stage stage;
     static Scene loginScreen;
