@@ -1,1 +1,0 @@
-Dummydata is now stored in RMI server
