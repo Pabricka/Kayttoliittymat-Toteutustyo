@@ -3,11 +3,11 @@ package models;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Journey implements Serializable{
-    private Train train;
-    private User buyer;
-    private Connection connection;
-    private LocalDate date;
+public class Journey implements Serializable {
+    //Train train;
+    User buyer;
+    Connection connection;
+    LocalDate date;
 
     public LocalDate getDate() {
         return date;
@@ -17,19 +17,20 @@ public class Journey implements Serializable{
         this.date = date;
     }
 
-    public Journey( User buyer, Connection connection) {
+    public Journey( User buyer, Connection connection,LocalDate date) {
        // this.train = train;
         this.buyer = buyer;
         this.connection = connection;
+        this.date = date;
     }
 
-    public Train getTrain() {
+    /*public Train getTrain() {
         return train;
     }
 
     public void setTrain(Train train) {
         this.train = train;
-    }
+    }*/
 
     public User getBuyer() {
         return buyer;
@@ -47,7 +48,7 @@ public class Journey implements Serializable{
         this.connection = connection;
     }
     public String getStrings(){
-        String information = buyer.getName() + "  " + connection.getFrom().toString() + "  " + connection.getTo().toString();
+        String information = buyer.getName() + "  " + date.toString() + " " + connection.getFrom().toString() + "  " + connection.getTo().toString();
         return information;
     }
 }

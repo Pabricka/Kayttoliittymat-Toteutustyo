@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
@@ -62,22 +63,11 @@ public class Server implements DummyData {
         users.add(new User("admin", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
 
         connections.add(new Connection(Station.HELSINKI, Station.TURKU, LocalTime.parse("01:57")));
-        connections.add(new Connection(Station.TURKU, Station.HELSINKI, LocalTime.parse("01:57")));
-
-        connections.add(new Connection(Station.TAMPERE, Station.TURKU, LocalTime.parse("01:47")));
         connections.add(new Connection(Station.TURKU, Station.TAMPERE, LocalTime.parse("01:47")));
-
         connections.add(new Connection(Station.SEINÄJOKI, Station.VAASA, LocalTime.parse("00:47")));
-        connections.add(new Connection(Station.VAASA, Station.SEINÄJOKI, LocalTime.parse("00:47")));
-
         connections.add(new Connection(Station.JYVÄSKYLÄ, Station.JOENSUU, LocalTime.parse("03:11")));
-        connections.add(new Connection(Station.JOENSUU, Station.JYVÄSKYLÄ, LocalTime.parse("03:11")));
-
         connections.add(new Connection(Station.OULU, Station.KAJAANI, LocalTime.parse("02:14")));
-        connections.add(new Connection(Station.KAJAANI, Station.OULU, LocalTime.parse("02:14")));
-
         connections.add(new Connection(Station.KOUVOLA, Station.HELSINKI, LocalTime.parse("01:19")));
-        connections.add(new Connection(Station.HELSINKI, Station.KOUVOLA, LocalTime.parse("01:19")));
 
 
         ArrayList<LocalTime> taims = new ArrayList<>();
@@ -91,7 +81,9 @@ public class Server implements DummyData {
         }
         Random rnd = new Random();
         for(int i= 0; i<=20;i++){
-            journeys.add(new Journey(users.get(rnd.nextInt(users.size())),connections.get(rnd.nextInt(connections.size()))));
+            LocalDate now = LocalDate.now();
+            LocalDate randomdate = now.plusDays(rnd.nextInt(30));
+            journeys.add(new Journey(users.get(rnd.nextInt(users.size())),connections.get(rnd.nextInt(connections.size())),randomdate));
         }
 
     }
