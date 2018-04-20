@@ -1,6 +1,6 @@
-package Server;
+package server;
 
-import Models.*;
+import models.*;
 
 import java.net.InetAddress;
 import java.rmi.RemoteException;
@@ -62,11 +62,22 @@ public class Server implements DummyData {
         users.add(new User("admin", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
 
         connections.add(new Connection(Station.HELSINKI, Station.TURKU, LocalTime.parse("01:57")));
+        connections.add(new Connection(Station.TURKU, Station.HELSINKI, LocalTime.parse("01:57")));
+
+        connections.add(new Connection(Station.TAMPERE, Station.TURKU, LocalTime.parse("01:47")));
         connections.add(new Connection(Station.TURKU, Station.TAMPERE, LocalTime.parse("01:47")));
+
         connections.add(new Connection(Station.SEINÄJOKI, Station.VAASA, LocalTime.parse("00:47")));
+        connections.add(new Connection(Station.VAASA, Station.SEINÄJOKI, LocalTime.parse("00:47")));
+
         connections.add(new Connection(Station.JYVÄSKYLÄ, Station.JOENSUU, LocalTime.parse("03:11")));
+        connections.add(new Connection(Station.JOENSUU, Station.JYVÄSKYLÄ, LocalTime.parse("03:11")));
+
         connections.add(new Connection(Station.OULU, Station.KAJAANI, LocalTime.parse("02:14")));
+        connections.add(new Connection(Station.KAJAANI, Station.OULU, LocalTime.parse("02:14")));
+
         connections.add(new Connection(Station.KOUVOLA, Station.HELSINKI, LocalTime.parse("01:19")));
+        connections.add(new Connection(Station.HELSINKI, Station.KOUVOLA, LocalTime.parse("01:19")));
 
 
         ArrayList<LocalTime> taims = new ArrayList<>();

@@ -1,16 +1,16 @@
-package Models;
+package models;
 
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Connection implements Serializable {
-    Station from;
-    Station to;
+    private Station from;
+    private Station to;
     //String from;
     //String to;
-    LocalTime length;
-    ArrayList<LocalTime> times;
+    private LocalTime length;
+    private ArrayList<LocalTime> times;
 
     public Connection(Station from,Station to,LocalTime length){
         this.from = from;

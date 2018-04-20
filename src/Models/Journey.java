@@ -1,21 +1,21 @@
-package Models;
+package models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Journey implements Serializable{
-    //Train train;
-    User buyer;
-    Connection connection;
-    //LocalDate date;
+    private Train train;
+    private User buyer;
+    private Connection connection;
+    private LocalDate date;
 
-    /*public LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }*/
+    }
 
     public Journey( User buyer, Connection connection) {
        // this.train = train;
@@ -23,13 +23,13 @@ public class Journey implements Serializable{
         this.connection = connection;
     }
 
-    /*public Train getTrain() {
+    public Train getTrain() {
         return train;
     }
 
     public void setTrain(Train train) {
         this.train = train;
-    }*/
+    }
 
     public User getBuyer() {
         return buyer;

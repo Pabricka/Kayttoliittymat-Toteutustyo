@@ -1,7 +1,7 @@
-package Models;
+package models;
 
 import java.io.Serializable;
 
 public enum Station implements Serializable {
-    PORI,TURKU,HELSINKI,KOUVOLA, TAMPERE,JYVÄSKYLÄ,KUOPIO,JOENSUU,VAASA,SEINÄJOKI,KAJAANI,OULU,ROVANIEMI
+    TURKU, HELSINKI, TAMPERE, JOENSUU, JYVÄSKYLÄ, PORI, VAASA, SEINÄJOKI, KAJAANI, KOUVOLA, KUOPIO, OULU, ROVANIEMI
 }

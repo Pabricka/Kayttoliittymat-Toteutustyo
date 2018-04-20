@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KäyttöliittymätToteutustyö.iml" filepath="$PROJECT_DIR$/KäyttöliittymätToteutustyö.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Kayttoliittymat-Toteutustyo.iml" filepath="$PROJECT_DIR$/.idea/Kayttoliittymat-Toteutustyo.iml" />
     </modules>
   </component>
 </project>

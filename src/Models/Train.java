@@ -1,11 +1,17 @@
-package Models;
+package models;
 
 import java.util.ArrayList;
 
 public class Train {
     private String engine;
     private int seats;
-    ArrayList<Car> cars;
+    private ArrayList<Car> cars;
+
+    public Train(String engine){
+        this.engine = engine;
+        cars = Car.initCars();
+
+    }
 
     public String getEngine() {
         return engine;
