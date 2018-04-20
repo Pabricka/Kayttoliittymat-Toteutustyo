@@ -22,6 +22,9 @@ public class Controller  {
     @FXML
     private TextField name_field;
 
+    @FXML
+    private TextField address_field;
+
 
     @FXML
     private Text info_text;
@@ -38,12 +41,7 @@ public class Controller  {
 
 
     @FXML
-    Button login_button;
-
-    @FXML
     Button create_account_button;
-    @FXML
-    Button create_account_button2;
 
     public void Create_account_buttonClicked() throws IOException {
         info_text.setText("Account created!" + System.getProperty("line.separator") + "You can now log in.");
@@ -61,6 +59,10 @@ public class Controller  {
         }
         else {
             create_account_info.setText("Name must contain" + System.getProperty("line.separator") +  "only letters!");
+            return;
+        }
+        if(address_field.getText().length()<1){
+            create_account_info.setText("Address can't be" + System.getProperty("line.separator") +  "empty!");
             return;
         }
         if(create_username_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")){
@@ -87,7 +89,7 @@ public class Controller  {
         Client.stage.setScene(Client.loginScreen);
         Admin_controller.items.add(create_username_field.getText());
         try {
-            Client.dummyData.createNewUser(name_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
+            Client.dummyData.createNewUser(name_field.getText(), address_field.getText(), create_username_field.getText(), create_password_field.getText(), false);
         }
         catch (Exception e){
             e.printStackTrace();

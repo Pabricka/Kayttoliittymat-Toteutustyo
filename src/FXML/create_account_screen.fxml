@@ -30,25 +30,31 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="username_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Text fx:id="username_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text fx:id="password_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+      <Text fx:id="password_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets right="5.0" />
          </GridPane.margin>
       </Text>
       <TextField fx:id="name_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="create_username_field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <PasswordField fx:id="create_password_field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Button alignment="CENTER" mnemonicParsing="false" onAction="#Create_account_button2Clicked" text="Create account" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <TextField fx:id="create_username_field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <PasswordField fx:id="create_password_field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Button alignment="CENTER" mnemonicParsing="false" onAction="#Create_account_button2Clicked" text="Create account" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
       <Text fx:id="name_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text fx:id="create_account_info" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Text fx:id="create_account_info" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+      <Text fx:id="address_text" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="5.0" />
+         </GridPane.margin>
+      </Text>
+      <TextField fx:id="address_field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>

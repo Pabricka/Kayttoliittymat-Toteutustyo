@@ -44,22 +44,22 @@ public class Server implements DummyData {
 
 
     @Override
-    public void createNewUser(String name, String username, String password, Boolean admin) {
-        users.add(new User(name,username,password,admin));
+    public void createNewUser(String name, String address, String username, String password, Boolean admin) {
+        users.add(new User(name,address,username,password,admin));
 
     }
 
     private static void initializeDummyData() {
-        users.add(new User("Juha Mieto", "Mämmi666", "1234", false));
-        users.add(new User("Jari Mentula", "Bull", "maitorahka", true));
-        users.add(new User("Alvin J", "Ellis", "dolor", false));
-        users.add(new User("Beverly Z", "Lucas", "Nullam", false));
-        users.add(new User("Odysseus I", "Russo", "bibendum", false));
-        users.add(new User("Carlos U", "Meyers", "Aliquam", false));
-        users.add(new User("Kevin M", "Monroe", "ante", false));
-        users.add(new User("Clare W", "Hammond", "Quisque", false));
-        users.add(new User("Sonya A", "Hopper", "mollis", false));
-        users.add(new User("admin", "a", "a", true));
+        users.add(new User("Juha Mieto", "1539 Long Street","Mämmi666", "1234", false));
+        users.add(new User("Jari Mentula", "120 Highland Drive","Bull", "maitorahka", true));
+        users.add(new User("Alvin J", "1196 Northwest Boulevard","Ellis", "dolor", false));
+        users.add(new User("Beverly Z", "3641 Charles Street","Lucas", "Nullam", false));
+        users.add(new User("Odysseus I", "3103 Ritter Avenue","Russo", "bibendum", false));
+        users.add(new User("Carlos U", "1973 Gore Street","Meyers", "Aliquam", false));
+        users.add(new User("Kevin M", "1138 Carriage Lane","Monroe", "ante", false));
+        users.add(new User("Clare W", "4168 Newton Street","Hammond", "Quisque", false));
+        users.add(new User("Sonya A", "2680 Sycamore Lake Road","Hopper", "mollis", false));
+        users.add(new User("admin", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
 
         connections.add(new Connection(Station.HELSINKI, Station.TURKU, LocalTime.parse("01:57")));
         connections.add(new Connection(Station.TURKU, Station.TAMPERE, LocalTime.parse("01:47")));
