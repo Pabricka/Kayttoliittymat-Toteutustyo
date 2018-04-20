@@ -24,7 +24,6 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-
         primaryStage.setTitle("Log in");
         primaryStage.setResizable(false);
         stage = primaryStage;
@@ -36,7 +35,6 @@ public class Client extends Application {
         primaryStage.setScene(loginScreen);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
 

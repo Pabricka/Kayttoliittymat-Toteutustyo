@@ -16,6 +16,4 @@ public interface DummyData extends Remote {
     void changeUsername(int i, String s) throws RemoteException;
     void changePassword(int i, String s) throws RemoteException;
     ArrayList<Journey> getJourneys() throws RemoteException;
-
-
 }
