@@ -157,9 +157,8 @@ public class AdminController {
             journey_items.add(journey.getStrings());
         }
         user_list.setItems(items);
-       journey_list.setItems(journey_items);
-
-       user_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        journey_list.setItems(journey_items);
+        user_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
            @Override
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                System.out.println("ListView selection changed from oldValue = "
