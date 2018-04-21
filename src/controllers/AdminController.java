@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class AdminController {
@@ -69,11 +70,78 @@ public class AdminController {
    @FXML
     public void initialize (){
 
+
        sort_box.getItems().removeAll(sort_box.getItems());
        sort_box.getItems().addAll("user","date","connection");
+       sort_box.valueProperty().addListener(new ChangeListener<String>() {
+           @Override
+           public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+               if(sort_box.getSelectionModel().getSelectedItem() == "connection") {
+
+                   Collections.sort(journeys,(o1, o2) -> o1.getConnection().getFrom().toString().compareTo(o2.getConnection().getFrom().toString())
+                   );
+                   journey_items = FXCollections.observableArrayList();
+                   for (Journey journey : journeys) {
+                       journey_items.add(journey.getStrings());
+                   }
+
+                   journey_list.setItems(journey_items);
+               }
+
+
+               else if (sort_box.getSelectionModel().getSelectedItem() == "user"){
+
+
+                       Collections.sort(journeys, (o1, o2) -> o1.getBuyer().getName().compareTo(o2.getBuyer().getName())
+                       );
+                       journey_items = FXCollections.observableArrayList();
+                       for (Journey journey : journeys) {
+                           journey_items.add(journey.getStrings());
+                       }
+
+                   journey_list.setItems(journey_items);
+
+                   }
+                   else {
+
+
+                   Collections.sort(journeys, (o1, o2) -> o1.getDate().compareTo(o2.getDate())
+                   );
+                   journey_items = FXCollections.observableArrayList();
+                   for (Journey journey : journeys) {
+                       journey_items.add(journey.getStrings());
+                   }
+
+                   journey_list.setItems(journey_items);
+
+               }
+               }
+
+               /*else{
+                   for (String s:journey_items){
+                       System.out.println(s);
+                   }
+                   System.out.println();
+                   Collections.sort(journeys, (o1, o2) -> o1.getConnection().getFrom().compareTo(o2.getConnection().getFrom())
+                   );
+                   journey_items = FXCollections.observableArrayList();
+                   for (Journey journey:journeys){
+                       journey_items.add(journey.getStrings());
+                   }
+                   for (String s:journey_items){
+                       System.out.println(s);
+                   }
+
+
+               }*/
+
+       });
+
+
+
        try {
-           users = controllers.Client.dummyData.getUsers();
-           journeys = controllers.Client.dummyData.getJourneys();
+           users = Client.dummyData.getUsers();
+           journeys = Client.dummyData.getJourneys();
        }
        catch (Exception e){
            e.printStackTrace();
@@ -124,8 +192,8 @@ public class AdminController {
 
             //change the users username in database
             try {
-                controllers.Client.dummyData.changeUsername(user_list.getSelectionModel().getSelectedIndex(), u_field.getText());
-                users = controllers.Client.dummyData.getUsers();
+                Client.dummyData.changeUsername(user_list.getSelectionModel().getSelectedIndex(), u_field.getText());
+                users = Client.dummyData.getUsers();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -153,8 +221,8 @@ public class AdminController {
 
             //change the users name in database
             try {
-                controllers.Client.dummyData.changeName(user_list.getSelectionModel().getSelectedIndex(), n_field.getText());
-                users = controllers.Client.dummyData.getUsers();
+                Client.dummyData.changeName(user_list.getSelectionModel().getSelectedIndex(), n_field.getText());
+                users = Client.dummyData.getUsers();
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -180,8 +248,8 @@ public class AdminController {
             p_button.setText("Edit");
             //change the users password in database
             try {
-                controllers.Client.dummyData.changePassword(user_list.getSelectionModel().getSelectedIndex(), p_field.getText());
-                users = controllers.Client.dummyData.getUsers();
+                Client.dummyData.changePassword(user_list.getSelectionModel().getSelectedIndex(), p_field.getText());
+                users = Client.dummyData.getUsers();
             }
             catch (Exception e){
                 e.printStackTrace();

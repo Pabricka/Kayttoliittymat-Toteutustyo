@@ -1,8 +1,7 @@
 package server;
 
 
-import models.Journey;
-import models.User;
+import models.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
