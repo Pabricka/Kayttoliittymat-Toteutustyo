@@ -52,7 +52,7 @@
          </font>
       </Label>
       <TextField fx:id="timeBox" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Label text="Time:" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="TOP">
+      <Label text="Time (hh:mm)" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="TOP">
          <font>
             <Font size="18.0" />
          </font>

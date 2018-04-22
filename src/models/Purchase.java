@@ -1,6 +1,8 @@
 package models;
 
-public class Purchase {
+import java.io.Serializable;
+
+public class Purchase implements Serializable {
 
     private User buyer;
     private Trip trip;
@@ -49,7 +51,7 @@ public class Purchase {
     }
 
     public String getStrings(){
-        String information = buyer.getName() + "  " + trip.getDate().toString() + " " + trip.getConnection().getFrom().toString() + "  " + trip.getConnection().getTo().toString();
+        String information = buyer.getName() + "  " + trip.getDepartureTime().toLocalDate().toString() + " " + trip.getConnection().getFrom().toString() + "  " + trip.getConnection().getTo().toString();
         return information;
     }
 }

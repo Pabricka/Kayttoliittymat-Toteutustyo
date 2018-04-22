@@ -1,6 +1,8 @@
 package models;
 
-public class Seat {
+import java.io.Serializable;
+
+public class Seat implements Serializable{
 
     private boolean free;
     private boolean forTheAllergic;

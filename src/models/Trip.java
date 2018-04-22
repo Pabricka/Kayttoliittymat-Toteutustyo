@@ -1,19 +1,21 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
-public class Trip {
+public class Trip implements Comparable<Trip>, Serializable {
     private Train train;
     private Connection connection;
-    private LocalDate date;
-    private LocalTime departureTime;
+    private LocalDateTime departureTime;
 
-    public Trip(Train train, Connection connection, LocalDate date, LocalTime departureTime) {
+    public Trip(Train train, Connection connection, LocalDate date, LocalTime time) {
         this.train = train;
         this.connection = connection;
-        this.date = date;
-        this.departureTime = departureTime;
+        this.departureTime = LocalDateTime.of(date, time);
+
     }
 
     public Train getTrain() {
@@ -32,19 +34,37 @@ public class Trip {
         this.connection = connection;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalTime departureTime) {
+    public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
+    }
+
+    @Override
+    public int compareTo(Trip o) {
+        return(departureTime.compareTo(o.departureTime));
+    }
+
+    public boolean hasSpace(int amount){
+        int free = 0;
+        List<Seat> seats;
+        List<Car> cars = train.getCars();
+        for(Car car : cars){
+            seats = car.getSeats();
+            for(Seat seat : seats){
+                if(seat.isFree()){
+                    free++;
+                }
+            }
+        }
+        System.out.println(free);
+        if(free >= amount) return true;
+        else return false;
+    }
+
+    public String toString(){
+        return departureTime.toString() + " " + connection.getFrom().toString() + " " + connection.getTo().toString();
     }
 }

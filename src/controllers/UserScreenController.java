@@ -14,13 +14,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Connection;
 import models.Station;
 import models.Trip;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static controllers.Client.dummyData;
 
 public class UserScreenController {
     @FXML
@@ -55,90 +63,64 @@ public class UserScreenController {
     private List<Trip> trips;
     private List<Trip> foundTrips;
 
-    public void initialize(){
+    private String timeString;
+
+    public void initialize() {
 
         populateDepOrArr();
         populatePassengerAmontBox();
         initDatePicker();
         initToFromBoxes();
         initSettingsButton();
+        initSearchButton();
     }
 
-    /**
-     * Checks if a station is included in a list of stations
-     * @param station station whose inclusion is checked
-     * @param stations list of stations
-     * @return true if station in stations, false otherwise
-     */
-    public boolean isStationInList(Station station, List<String> stations){
-        for(String s : stations){
-            if(station.toString().equals(s)) return true;
-        }
-        return false;
-    }
-
-    public void populatePassengerAmontBox(){
-        passengerAmount = FXCollections.observableArrayList();
-        for(int i = 1; i < 11; i++){
-            passengerAmount.add(i);
-        }
-        passAmount.setItems(passengerAmount);
-    }
-
-    public void populateDepOrArr(){
-        depOrAr = FXCollections.observableArrayList();
-        depOrAr.addAll("Departure", "Arrival");
-        departureOrArrival.setItems(depOrAr);
-    }
-
-    public void initDatePicker(){
+    public void initDatePicker() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
 
-                setDisable(empty || date.compareTo(today) < 0 );
+                setDisable(empty || date.compareTo(today) < 0);
             }
         });
     }
-    public void initToFromBoxes(){
+
+    public void initToFromBoxes() {
         toStations = FXCollections.observableArrayList();
         fromStations = FXCollections.observableArrayList();
 
         //Populate the options in toBox and fromBox with stations in existing journeys
         try {
-            trips = Client.dummyData.getTrips();
-        }
-        catch(RemoteException e){
+            trips = dummyData.getTrips();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
-        for(Trip trip : trips){
+        for (Trip trip : trips) {
             Station to = trip.getConnection().getTo();
             Station from = trip.getConnection().getFrom();
-            if(!isStationInList(to,toStations)) toStations.add(to.toString());
-            if(!isStationInList(from,fromStations)) fromStations.add(from.toString());
+            if (!isStationInList(to, toStations)) toStations.add(to.toString());
+            if (!isStationInList(from, fromStations)) fromStations.add(from.toString());
         }
         fromBox.setItems(fromStations);
         toBox.setItems(toStations);
 
         // Update the options in toBox based on the fromBox selection
-        fromBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                ObservableList<String> newToStations = FXCollections.observableArrayList();
-                for(Trip trip : trips){
-                    Station to = trip.getConnection().getTo();
-                    Station from = trip.getConnection().getFrom();
-                    if(!isStationInList(to,newToStations) && from.toString().equals(newValue)) newToStations.add(to.toString());
-                }
-
-                toBox.setItems(newToStations);
+        fromBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            ObservableList<String> newToStations = FXCollections.observableArrayList();
+            for (Trip trip : trips) {
+                Station to = trip.getConnection().getTo();
+                Station from = trip.getConnection().getFrom();
+                if (!isStationInList(to, newToStations) && from.toString().equals(newValue))
+                    newToStations.add(to.toString());
             }
+
+            toBox.setItems(newToStations);
         });
     }
-    public void initSettingsButton(){
-        settingsButton.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
+
+    public void initSettingsButton() {
+        settingsButton.setOnAction(event -> {
                 Parent root;
                 try {
                     root = FXMLLoader.load(getClass().getResource("/FXML/settings_screen.fxml"));
@@ -146,28 +128,165 @@ public class UserScreenController {
                     stage.setTitle("Settings");
                     stage.initModality(Modality.WINDOW_MODAL);
                     stage.initOwner(
-                            ((Node)event.getSource()).getScene().getWindow() );
+                            ((Node) event.getSource()).getScene().getWindow());
                     stage.setScene(new Scene(root));
                     stage.show();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
         });
     }
 
-    public void initSearchButton(){
-        searchButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(!validateInput()) return;
-//                search();
+    public void initSearchButton() {
+        searchButton.setOnAction(event -> {
+            if (!validateInput()) return;
+            foundTrips = searchForTrips();
+
+            if(foundTrips.size() == 0){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error!");
+                alert.setHeaderText("Couldn't find any trips to match criteria!");
+                alert.setContentText("Please try to change your criteria.");
+                alert.showAndWait();
             }
         });
+
     }
-    public boolean validateInput(){
+
+    /**
+     * Checks if a station is included in a list of stations
+     *
+     * @param station  station whose inclusion is checked
+     * @param stations list of stations
+     * @return true if station in stations, false otherwise
+     */
+    public boolean isStationInList(Station station, List<String> stations) {
+        for (String s : stations) {
+            if (station.toString().equals(s)) return true;
+        }
+        return false;
+    }
+
+    public void populatePassengerAmontBox() {
+        passengerAmount = FXCollections.observableArrayList();
+        for (int i = 1; i < 11; i++) {
+            passengerAmount.add(i);
+        }
+        passAmount.setItems(passengerAmount);
+    }
+
+    public void populateDepOrArr() {
+        depOrAr = FXCollections.observableArrayList();
+        depOrAr.addAll("Departure", "Arrival");
+        departureOrArrival.setItems(depOrAr);
+    }
+
+    public boolean validateInput() {
+
+        if (!areAllFilled()) return false;
+        if (!validateTime()) return false;
         return true;
     }
 
+    public boolean areAllFilled() {
+        if (fromBox.getValue() == null || toBox.getValue() == null || passAmount.getValue() == null ||
+                datePicker.getValue() == null || timeBox.getText() == null || departureOrArrival.getValue() == null) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText("All fields not filled out!");
+            alert.setContentText("Make sure to fill all the fields!");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validateTime() {
+
+        boolean valid;
+        timeString = timeBox.getText().replaceAll("[^0-9]", "");
+        if (timeString.length() < 3) {
+            valid = false;
+        } else {
+            if (timeString.length() == 3) {
+                timeString = "0" + timeString;
+            }
+            timeString = timeString.substring(0, 2) + ":" + timeString.substring(2, 4);
+            if (timeString.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]")) {
+                valid = true;
+            } else {
+                valid = false;
+            }
+        }
+
+        if(!valid){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Error in reading time");
+            alert.setContentText("Check your time input!");
+            alert.showAndWait();
+            return false;
+        }
+        return valid;
+    }
+
+    public List<Trip> searchForTrips() {
+
+        System.out.println("Trips in database:");
+        for(Trip trip : trips){
+            System.out.println(trip + " " + trip.getTrain().getSeats());
+        }
+
+        List<Trip> foundTrips = new ArrayList<>();
+        boolean departure;
+        int amount = Integer.parseInt(passAmount.getValue().toString());
+
+        if(departureOrArrival.getValue().equals("Departure")) departure = true;
+        else departure = false;
+
+        try {
+            List<Trip> trips = dummyData.getTrips();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        LocalTime time = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalDate date = datePicker.getValue();
+        LocalDateTime dateTime = LocalDateTime.of(date, time);
+
+        for (Trip trip : trips) {
+            if (connectionMatchesSelection(trip.getConnection()) && isAfterTime(trip, dateTime, departure) && trip.hasSpace(amount)) {
+                foundTrips.add(trip);
+            }
+        }
+
+        Collections.sort(foundTrips);
+        System.out.println("Found trips:");
+        for(Trip trip : foundTrips){
+            System.out.println(trip);
+        }
+        return foundTrips;
+    }
+
+    public boolean connectionMatchesSelection(Connection connection) {
+        String from = fromBox.getValue().toString();
+        String to = toBox.getValue().toString();
+
+        if (connection.getFrom().toString().equals(from) && connection.getTo().toString().equals(to)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isAfterTime(Trip trip, LocalDateTime dateTime, boolean departure) {
+        LocalDateTime tripTime = trip.getDepartureTime();
+        if(!departure){
+            tripTime.plusHours(trip.getConnection().getLength().getHour()).plusMinutes(trip.getConnection().getLength().getMinute());
+        }
+        if(tripTime.toLocalDate().equals(dateTime.toLocalDate()) && tripTime.compareTo(dateTime) >= 0) {
+            return true;
+        }
+        return false;
+    }
 }

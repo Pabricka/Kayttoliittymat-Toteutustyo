@@ -16,13 +16,20 @@ public class Server implements DummyData {
 
     private static ArrayList<User> users;
     private static ArrayList<Connection> connections;
+    private static ArrayList<Car> carTypes;
+    private static ArrayList<Train> trains;
     private static ArrayList<Trip> trips;
+    private static ArrayList<Purchase> purchases;
 
     public static void main(String args[]){
 
         users = new ArrayList<>();
         trips = new ArrayList<>();
+        trains = new ArrayList<>();
+        purchases = new ArrayList<>();
+        trips = new ArrayList<>();
         connections = new ArrayList<>();
+        carTypes = new ArrayList<>();
 
         initializeDummyData();
         try {
@@ -61,29 +68,73 @@ public class Server implements DummyData {
         users.add(new User("Sonya A", "2680 Sycamore Lake Road","Hopper", "mollis", false));
         users.add(new User("admin", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
 
-        connections.add(new Connection(Station.HELSINKI, Station.TURKU, LocalTime.parse("01:57")));
-        connections.add(new Connection(Station.TURKU, Station.TAMPERE, LocalTime.parse("01:47")));
-        connections.add(new Connection(Station.SEINÄJOKI, Station.VAASA, LocalTime.parse("00:47")));
-        connections.add(new Connection(Station.JYVÄSKYLÄ, Station.JOENSUU, LocalTime.parse("03:11")));
-        connections.add(new Connection(Station.OULU, Station.KAJAANI, LocalTime.parse("02:14")));
-        connections.add(new Connection(Station.KOUVOLA, Station.HELSINKI, LocalTime.parse("01:19")));
 
-
-        ArrayList<LocalTime> taims = new ArrayList<>();
-        taims.add(LocalTime.parse("12:00"));
-        taims.add(LocalTime.parse("15:00"));
-        taims.add(LocalTime.parse("17:00"));
-        taims.add(LocalTime.parse("20:00"));
-
-        for (Connection connection : connections) {
-            connection.setTimes(taims);
+        //generate a lot of trains
+        for(int i=0; i<166; i++){
+            trains.add(new Train("UTU" + i+1));
         }
+        //and some more
+        trains.add(new Train("UTU666"));
+        trains.add(new Train("Thomas the Tank Engine"));
+
+
+
+        carTypes.add(new Car("Passenger car", 20,true, false, false, false));
+        carTypes.add(new Car("Pet car", 12,false, false, true, false));
+        carTypes.add(new Car("Family car", 15,true, true, false, true));
+        carTypes.add(new Car("Paladin car", 8,true, true, false, false));
+
+
+
+        //generate cars to trains
         Random rnd = new Random();
-        for(int i= 0; i<=20;i++){
-            LocalDate now = LocalDate.now();
-            LocalDate randomdate = now.plusDays(rnd.nextInt(30));
-            //TODO Luo Trip-oliot, tee varauksia niihin
-//            journeys.add(new Journey(users.get(rnd.nextInt(users.size())),connections.get(rnd.nextInt(connections.size())),randomdate));
+        for(Train train : trains){
+            for(int i=0; i<rnd.nextInt(5)+1; i++){
+                train.addCar(carTypes.get(rnd.nextInt(carTypes.size())));
+            }
+        }
+
+
+        connections.add(new Connection(Station.HELSINKI, Station.TURKU, 20, LocalTime.parse("01:57")));
+        connections.add(new Connection(Station.TURKU, Station.TAMPERE, 22, LocalTime.parse("01:47")));
+        connections.add(new Connection(Station.SEINÄJOKI, Station.VAASA, 18, LocalTime.parse("00:47")));
+        connections.add(new Connection(Station.JYVÄSKYLÄ, Station.JOENSUU, 16, LocalTime.parse("03:11")));
+        connections.add(new Connection(Station.OULU, Station.KAJAANI, 21, LocalTime.parse("02:14")));
+        connections.add(new Connection(Station.KOUVOLA, Station.HELSINKI, 17, LocalTime.parse("01:19")));
+
+
+        ArrayList<LocalTime> connectionTimes = new ArrayList<>();
+        connectionTimes.add(LocalTime.parse("12:00"));
+        connectionTimes.add(LocalTime.parse("15:00"));
+        connectionTimes.add(LocalTime.parse("17:00"));
+        connectionTimes.add(LocalTime.parse("20:00"));
+
+
+        int tmpTrainCounter = 0;
+        for (Connection connection : connections) {
+            connection.setTimes(connectionTimes);
+            for(LocalTime time : connectionTimes){
+                for(int i = 0; i < 7; i++) {
+                    LocalDate now = LocalDate.now();
+                    LocalDate date = now.plusDays(i);
+                    trips.add(new Trip(trains.get(tmpTrainCounter), connection, date, time));
+                    tmpTrainCounter++;
+                }
+            }
+        }
+        for(Trip trip : trips){
+            for(int i= 0; i<=rnd.nextInt(trip.getTrain().getSeats());i++){
+
+                // ¯\_(ツ)_/¯
+                int tmpCar = rnd.nextInt(trip.getTrain().getCars().size());
+                int tmpSeat = rnd.nextInt(trip.getTrain().getCars().get(tmpCar).getSeats().size());
+
+
+                if(trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).isFree()) {
+                    purchases.add(new Purchase(users.get(rnd.nextInt(users.size())), trip, tmpCar, tmpSeat));
+                    trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).setFree(false);
+                }
+            }
         }
 
     }
@@ -112,5 +163,10 @@ public class Server implements DummyData {
     @Override
     public ArrayList<Trip> getTrips()throws RemoteException {
         return trips;
+    }
+
+    @Override
+    public ArrayList<Purchase> getPurchases() throws RemoteException {
+        return purchases;
     }
 }

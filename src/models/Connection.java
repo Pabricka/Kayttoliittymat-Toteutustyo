@@ -10,11 +10,13 @@ public class Connection implements Serializable {
     //String from;
     //String to;
     private LocalTime length;
+    private int price;
     private ArrayList<LocalTime> times;
 
-    public Connection(Station from,Station to,LocalTime length){
+    public Connection(Station from,Station to, int price, LocalTime length){
         this.from = from;
         this.to = to;
+        this.price = price;
         this.length = length;
     }
 
@@ -65,5 +67,13 @@ public class Connection implements Serializable {
 
     public void setLength(LocalTime length) {
         this.length = length;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
