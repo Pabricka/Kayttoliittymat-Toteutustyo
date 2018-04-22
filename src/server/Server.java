@@ -130,6 +130,7 @@ public class Server implements DummyData {
 
                 if(trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).isFree()) {
                     purchases.add(new Purchase(users.get(rnd.nextInt(users.size())), trip, tmpCar, tmpSeat));
+                    trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).setFree(false);
                 }
             }
         }

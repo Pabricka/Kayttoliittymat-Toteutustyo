@@ -45,7 +45,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Text fx:id="u_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="109.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Text fx:id="u_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="109.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="7.0" />
                                  </GridPane.margin>
@@ -53,7 +53,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="n_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="117.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                              <Text fx:id="n_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="117.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="7.0" />
                                  </GridPane.margin>
@@ -69,12 +69,12 @@
                                     <Font size="14.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="username_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="128.13671875" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                              <Text fx:id="username_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="128.13671875" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="name_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                              <Text fx:id="name_text" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -87,9 +87,9 @@
                               <Button fx:id="u_button" mnemonicParsing="false" onAction="#u_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <Button fx:id="n_button" mnemonicParsing="false" onAction="#n_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                               <Button fx:id="p_button" mnemonicParsing="false" onAction="#p_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                              <TextField fx:id="u_field" visible="false" GridPane.columnIndex="2" />
-                              <TextField fx:id="n_field" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField fx:id="p_field" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <TextField fx:id="u_field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <TextField fx:id="n_field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <TextField fx:id="p_field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                               <Label text="Users" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <font>
                                     <Font size="24.0" />
