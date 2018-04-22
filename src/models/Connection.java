@@ -7,8 +7,6 @@ import java.util.ArrayList;
 public class Connection implements Serializable {
     private Station from;
     private Station to;
-    //String from;
-    //String to;
     private LocalTime length;
     private int price;
     private ArrayList<LocalTime> times;
@@ -28,21 +26,6 @@ public class Connection implements Serializable {
         this.times = times;
     }
 
-    /*public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }*/
 
     public Station getFrom() {
         return from;
@@ -57,17 +40,12 @@ public class Connection implements Serializable {
         return length;
     }
 
-   /* public void setFrom(Station from) {
-        this.from = from;
-    }
 
-    public void setTo(Station to) {
-        this.to = to;
-    }*/
 
     public void setLength(LocalTime length) {
         this.length = length;
     }
+<<<<<<< HEAD
 
     public int getPrice() {
         return price;
@@ -76,4 +54,8 @@ public class Connection implements Serializable {
     public void setPrice(int price) {
         this.price = price;
     }
+||||||| merged common ancestors
+=======
+
+>>>>>>> 70d7212d36260bd1bd7c6fd7ac9f8ce1307c0fee
 }
