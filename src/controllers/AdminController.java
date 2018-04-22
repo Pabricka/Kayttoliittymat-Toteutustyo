@@ -1,20 +1,21 @@
 package controllers;
 
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import models.Journey;
+import models.Station;
 import models.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 public class AdminController {
@@ -62,23 +63,64 @@ public class AdminController {
     ComboBox<String> sort_box;
 
 
+   @FXML
+    Label from_label;
+   @FXML
+    Label to_label;
+   @FXML
+   Text from_text;
+   @FXML
+   Text to_text;
+   @FXML
+   ChoiceBox from_choice;
+   @FXML
+   ChoiceBox to_choice;
+   @FXML
+   Button edit_connection;
+   @FXML
+   Text date_text;
+   @FXML
+   DatePicker pick_date;
+   @FXML
+   Button edit_date;
+   @FXML
+   Label date_label;
+
+    private ObservableList<String> toStations;
+    private ObservableList<String> fromStations;
+
+
+
+
+
 
    static ObservableList<String> items;
    static  ObservableList<String>  journey_items;
 
 
    @FXML
-    public void initialize (){
+    public void initialize () {
+
+       pick_date.setDayCellFactory(picker -> new DateCell() {
+           public void updateItem(LocalDate date, boolean empty) {
+               super.updateItem(date, empty);
+               LocalDate today = LocalDate.now();
+
+               setDisable(empty || date.compareTo(today) < 0);
+           }
+       });
+       toStations = FXCollections.observableArrayList();
+       fromStations = FXCollections.observableArrayList();
 
 
        sort_box.getItems().removeAll(sort_box.getItems());
-       sort_box.getItems().addAll("user","date","connection");
+       sort_box.getItems().addAll("user", "date", "connection");
        sort_box.valueProperty().addListener(new ChangeListener<String>() {
            @Override
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-               if(sort_box.getSelectionModel().getSelectedItem() == "connection") {
+               if (sort_box.getSelectionModel().getSelectedItem() == "connection") {
 
-                   Collections.sort(journeys,(o1, o2) -> o1.getConnection().getFrom().toString().compareTo(o2.getConnection().getFrom().toString())
+                   Collections.sort(journeys, (o1, o2) -> o1.getConnection().getFrom().toString().compareTo(o2.getConnection().getFrom().toString())
                    );
                    journey_items = FXCollections.observableArrayList();
                    for (Journey journey : journeys) {
@@ -86,23 +128,19 @@ public class AdminController {
                    }
 
                    journey_list.setItems(journey_items);
-               }
+               } else if (sort_box.getSelectionModel().getSelectedItem() == "user") {
 
 
-               else if (sort_box.getSelectionModel().getSelectedItem() == "user"){
-
-
-                       Collections.sort(journeys, (o1, o2) -> o1.getBuyer().getName().compareTo(o2.getBuyer().getName())
-                       );
-                       journey_items = FXCollections.observableArrayList();
-                       for (Journey journey : journeys) {
-                           journey_items.add(journey.getStrings());
-                       }
+                   Collections.sort(journeys, (o1, o2) -> o1.getBuyer().getName().compareTo(o2.getBuyer().getName())
+                   );
+                   journey_items = FXCollections.observableArrayList();
+                   for (Journey journey : journeys) {
+                       journey_items.add(journey.getStrings());
+                   }
 
                    journey_list.setItems(journey_items);
 
-                   }
-                   else {
+               } else {
 
 
                    Collections.sort(journeys, (o1, o2) -> o1.getDate().compareTo(o2.getDate())
@@ -115,50 +153,30 @@ public class AdminController {
                    journey_list.setItems(journey_items);
 
                }
-               }
-
-               /*else{
-                   for (String s:journey_items){
-                       System.out.println(s);
-                   }
-                   System.out.println();
-                   Collections.sort(journeys, (o1, o2) -> o1.getConnection().getFrom().compareTo(o2.getConnection().getFrom())
-                   );
-                   journey_items = FXCollections.observableArrayList();
-                   for (Journey journey:journeys){
-                       journey_items.add(journey.getStrings());
-                   }
-                   for (String s:journey_items){
-                       System.out.println(s);
-                   }
-
-
-               }*/
+           }
 
        });
-
 
 
        try {
            users = Client.dummyData.getUsers();
            journeys = Client.dummyData.getJourneys();
-       }
-       catch (Exception e){
+       } catch (Exception e) {
            e.printStackTrace();
        }
 
 
-        items = FXCollections.observableArrayList();
-        journey_items = FXCollections.observableArrayList();
-        for (User user: users) {
-            items.add(user.getUsername());
-        }
-        for (Journey journey:journeys){
-            journey_items.add(journey.getStrings());
-        }
-        user_list.setItems(items);
-        journey_list.setItems(journey_items);
-        user_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+       items = FXCollections.observableArrayList();
+       journey_items = FXCollections.observableArrayList();
+       for (User user : users) {
+           items.add(user.getUsername());
+       }
+       for (Journey journey : journeys) {
+           journey_items.add(journey.getStrings());
+       }
+       user_list.setItems(items);
+       journey_list.setItems(journey_items);
+       user_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
            @Override
            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                System.out.println("ListView selection changed from oldValue = "
@@ -173,10 +191,41 @@ public class AdminController {
                n_button.setVisible(true);
                p_button.setVisible(true);
 
-           }
-       }
+                                                                            }
+                                                                        }
        );
+       journey_list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+           @Override
+           public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+               System.out.println("ListView selection changed from oldValue = "
+                       + oldValue + " to newValue = " + newValue);
+               from_label.setVisible(true);
+               to_label.setVisible(true);
+               date_label.setVisible(true);
+               edit_connection.setVisible(true);
+               edit_date.setVisible(true);
+               System.out.println(journey_list.getSelectionModel().getSelectedIndex());
+               from_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getConnection().getFrom().toString());
+               to_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getConnection().getTo().toString());
+               date_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getDate().toString());
+           }
+       });
+       for (Journey journey : journeys) {
+           Station to = journey.getConnection().getTo();
+           Station from = journey.getConnection().getFrom();
+           if (!isStationInList(to, toStations)) toStations.add(to.toString());
+           if (!isStationInList(from, fromStations)) fromStations.add(from.toString());
 
+       }
+       from_choice.setItems(fromStations);
+       to_choice.setItems(toStations);
+
+   }
+    public boolean isStationInList(Station station, List<String> stations){
+        for(String s : stations){
+            if(station.toString().equals(s)) return true;
+        }
+        return false;
     }
     public void u_buttonClicked(){
 
@@ -258,6 +307,31 @@ public class AdminController {
 
         }
 
+
+    }
+    public void edit_connection_buttonClicked(){
+       if (edit_connection.getText().equals("Edit")){
+           edit_connection.setText("Ok");
+           from_choice.setVisible(true);
+           to_choice.setVisible(true);
+       }
+       else {
+           edit_connection.setText("Edit");
+           from_choice.setVisible(false);
+           to_choice.setVisible(false);
+
+       }
+
+    }
+    public void edit_date_buttonClicked(){
+       if(edit_date.getText().equals("Edit")){
+           edit_date.setText("Ok");
+           pick_date.setVisible(true);
+       }
+       else{
+           edit_date.setText("Edit");
+           pick_date.setVisible(false);
+       }
 
     }
 
