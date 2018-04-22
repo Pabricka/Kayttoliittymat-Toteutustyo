@@ -1,9 +1,10 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Trip {
+public class Trip implements Serializable{
     private Train train;
     private Connection connection;
     private LocalDate date;

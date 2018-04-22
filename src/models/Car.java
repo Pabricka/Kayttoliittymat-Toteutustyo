@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Car {
+public class Car implements Serializable {
     private String name;
     private int seatAmount;
     private ArrayList<Seat> seats;
