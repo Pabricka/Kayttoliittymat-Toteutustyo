@@ -14,7 +14,6 @@ public class Client extends Application {
 
 
     static User currentUser;
-
     static Stage stage;
     static Scene loginScreen;
     static Scene createAccountScreen;

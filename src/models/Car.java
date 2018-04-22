@@ -26,13 +26,6 @@ public class Car {
         this.populateCar();
     }
 
-    public static ArrayList<Car> initCars(){
-        ArrayList<Car> cars = new ArrayList<>(3);
-        cars.add(new CarType1());
-        cars.add(new CarType2());
-        cars.add(new CarType3());
-        return cars;
-    }
 
     public void populateCar(){
         for(int i = 0; i < seatAmount; i++){

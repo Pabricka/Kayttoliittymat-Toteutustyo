@@ -16,12 +16,12 @@ public class Server implements DummyData {
 
     private static ArrayList<User> users;
     private static ArrayList<Connection> connections;
-    private static ArrayList<Journey> journeys;
+    private static ArrayList<Trip> trips;
 
     public static void main(String args[]){
 
         users = new ArrayList<>();
-        journeys = new ArrayList<>();
+        trips = new ArrayList<>();
         connections = new ArrayList<>();
 
         initializeDummyData();
@@ -82,7 +82,8 @@ public class Server implements DummyData {
         for(int i= 0; i<=20;i++){
             LocalDate now = LocalDate.now();
             LocalDate randomdate = now.plusDays(rnd.nextInt(30));
-            journeys.add(new Journey(users.get(rnd.nextInt(users.size())),connections.get(rnd.nextInt(connections.size())),randomdate));
+            //TODO Luo Trip-oliot, tee varauksia niihin
+//            journeys.add(new Journey(users.get(rnd.nextInt(users.size())),connections.get(rnd.nextInt(connections.size())),randomdate));
         }
 
     }
@@ -109,7 +110,7 @@ public class Server implements DummyData {
         users.get(i).setPassword(s);
     }
     @Override
-    public ArrayList<Journey> getJourneys()throws RemoteException {
-        return journeys;
+    public ArrayList<Trip> getTrips()throws RemoteException {
+        return trips;
     }
 }

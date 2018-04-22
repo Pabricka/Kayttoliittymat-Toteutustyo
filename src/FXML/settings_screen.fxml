@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SettingsController">
+    <content>
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                    <font>
+                        <Font size="33.0" />
+                    </font>
+                </Text>
+                <Button fx:id="closeBtn" mnemonicParsing="false" text="Close" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets right="20.0" top="20.0" />
+                    </GridPane.margin>
+                </Button>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First name" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <TextField fx:id="firstName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last name" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <TextField fx:id="phoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <TextField fx:id="emailAddress" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Button fx:id="updateContact" mnemonicParsing="false" text="Update contact info" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets top="10.0" />
+                    </GridPane.margin>
+                </Button>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payment info" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fx:id="paymentInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="No info saved" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+               <font>
+                  <Font size="14.0" />
+               </font></Text>
+                <Button fx:id="resetPaymentInfo" mnemonicParsing="false" text="Remove payment info " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                    <font>
+                        <Font size="11.0" />
+                    </font>
+                </Button>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Change your password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Old password" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <PasswordField fx:id="oldPassword" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New password" GridPane.halignment="RIGHT" GridPane.rowIndex="12">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <PasswordField fx:id="newPassword" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm new password" textAlignment="RIGHT" wrappingWidth="124.724609375" GridPane.halignment="RIGHT" GridPane.rowIndex="13">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Text>
+                <PasswordField fx:id="confirmPassword" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                <Button fx:id="changePassword" mnemonicParsing="false" text="Change password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                    <GridPane.margin>
+                        <Insets top="10.0" />
+                    </GridPane.margin></Button>
+            </children>
+        </GridPane>
+    </content>
+</ScrollPane>

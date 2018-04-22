@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Journey;
 import models.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

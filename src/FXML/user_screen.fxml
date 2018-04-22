@@ -32,7 +32,7 @@
       <ChoiceBox fx:id="toBox" prefWidth="150.0" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy tickets" GridPane.columnIndex="2" GridPane.halignment="CENTER">
          <font>
-            <Font size="29.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Text>
       <Label text="From:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -45,7 +45,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+      <DatePicker fx:id="datePicker" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Date:" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
          <font>
             <Font size="18.0" />
@@ -79,6 +79,6 @@
             <Insets top="10.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="settingsButton" mnemonicParsing="false" text="Asetukset" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+      <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
    </children>
 </GridPane>
