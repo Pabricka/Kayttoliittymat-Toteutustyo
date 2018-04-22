@@ -170,5 +170,4 @@ public class UserScreenController {
         return true;
     }
 
-//    public
 }
