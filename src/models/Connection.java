@@ -45,7 +45,6 @@ public class Connection implements Serializable {
     public void setLength(LocalTime length) {
         this.length = length;
     }
-<<<<<<< HEAD
 
     public int getPrice() {
         return price;
@@ -54,8 +53,5 @@ public class Connection implements Serializable {
     public void setPrice(int price) {
         this.price = price;
     }
-||||||| merged common ancestors
-=======
 
->>>>>>> 70d7212d36260bd1bd7c6fd7ac9f8ce1307c0fee
 }
