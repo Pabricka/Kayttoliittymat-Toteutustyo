@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private Boolean admin;
+    private CreditCard creditCard;
 
     public User(String name, String address, String username, String password, Boolean admin) {
         this.name = name;
@@ -63,5 +64,11 @@ public class User implements Serializable {
         this.admin = admin;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
 
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
 }

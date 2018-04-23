@@ -221,7 +221,7 @@ public class UserScreenController {
         }
 
         if(!valid){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error!");
             alert.setHeaderText("Error in reading time");
             alert.setContentText("Check your time input!");
