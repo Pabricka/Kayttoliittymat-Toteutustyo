@@ -59,7 +59,6 @@ public class Trip implements Comparable<Trip>, Serializable {
                 }
             }
         }
-        System.out.println(free);
         if (free >= amount) return true;
         else return false;
     }

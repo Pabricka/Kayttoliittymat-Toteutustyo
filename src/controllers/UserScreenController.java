@@ -1,17 +1,17 @@
 package controllers;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Connection;
@@ -55,6 +55,9 @@ public class UserScreenController {
     @FXML
     private Button searchButton;
 
+    @FXML
+    private GridPane grid;
+
     private ObservableList<String> toStations;
     private ObservableList<String> fromStations;
     private ObservableList<String> depOrAr;
@@ -65,16 +68,26 @@ public class UserScreenController {
 
     private String timeString;
 
-    static int amountOfPassengers;
+    private int amountOfPassengers;
 
     public void initialize() {
 
         populateDepOrArr();
         populatePassengerAmontBox();
+        initEnterToGo();
         initDatePicker();
         initToFromBoxes();
         initSettingsButton();
         initSearchButton();
+    }
+
+    public void initEnterToGo() {
+        grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                searchButton.fire();
+                ev.consume();
+            }
+        });
     }
 
     public void initDatePicker() {
@@ -124,6 +137,7 @@ public class UserScreenController {
     public void initSettingsButton() {
         settingsButton.setOnAction(event -> {
             Parent root;
+            System.out.println(Client.currentUser);
             try {
                 root = FXMLLoader.load(getClass().getResource("/FXML/settings_screen.fxml"));
                 Stage stage = new Stage();
@@ -145,6 +159,13 @@ public class UserScreenController {
             foundTrips = searchForTrips();
 
             if (foundTrips.size() != 0) {
+                try {
+                    Client.session.setFoundTrips(foundTrips);
+                    Client.session.setPassengers(amountOfPassengers);
+                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/display_trips_screen.fxml"))));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
