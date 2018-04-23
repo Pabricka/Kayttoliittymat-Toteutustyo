@@ -80,10 +80,20 @@ public class SettingsController {
             lastName = lastNameField.getText();
             address = addressField.getText();
 
-            if(!validContactInput(firstName, lastName, address)) return;
-            else {
+            if(validContactInput(firstName, lastName, address)) {
                 Client.currentUser.setName(firstName + " " + lastName);
                 Client.currentUser.setAddress(address);
+
+                //update database
+                try {
+                    Client.dummyData.changeName(Client.currentUser.getUsername(), firstName + " " + lastName);
+                    Client.dummyData.changeAddress(Client.currentUser.getUsername(), address);
+                }
+                catch (Exception exception){
+                    exception.printStackTrace();
+                }
+
+
                 contactMsg.setFill(Color.GREEN);
                 contactMsg.setText("Contact info updated!");
             }
@@ -163,6 +173,12 @@ public class SettingsController {
             }
             else {
                 Client.currentUser.setPassword(newPw);
+                try {
+                    Client.dummyData.changePassword(Client.currentUser.getUsername(), newPw);
+                }
+                catch (Exception exception){
+                    exception.printStackTrace();
+                }
                 pwMsg.setFill(Color.GREEN);
                 pwMsg.setText("Password changed!");
             }

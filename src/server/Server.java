@@ -66,7 +66,7 @@ public class Server implements DummyData {
         users.add(new User("Kevin M", "1138 Carriage Lane","Monroe", "ante", false));
         users.add(new User("Clare W", "4168 Newton Street","Hammond", "Quisque", false));
         users.add(new User("Sonya A", "2680 Sycamore Lake Road","Hopper", "mollis", false));
-        users.add(new User("admin", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
+        users.add(new User("admin A", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
 
 
         //generate a lot of trains
@@ -145,21 +145,50 @@ public class Server implements DummyData {
     }
 
     @Override
-    public void changeName(int i, String s) throws RemoteException {
-        users.get(i).setName(s);
+    public void changeName(String username, String s) throws RemoteException {
+        System.out.println("Changing " + username + "s name to " + s);
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setName(s);
+                System.out.println("Success!");
+            }
+        }
 
     }
 
     @Override
-    public void changeUsername(int i, String s) throws RemoteException {
-        users.get(i).setUsername(s);
-
+    public void changeUsername(String username, String s) throws RemoteException {
+        System.out.println("Changing " + username + "'s username to " + s);
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setUsername(s);
+                System.out.println("Success!");
+            }
+        }
     }
 
     @Override
-    public void changePassword(int i, String s) throws RemoteException {
-        users.get(i).setPassword(s);
+    public void changePassword(String username, String s) throws RemoteException {
+        System.out.println("Changing " + username + "s password to " + s);
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setPassword(s);
+                System.out.println("Success!");
+            }
+        }
     }
+
+    @Override
+    public void changeAddress(String username, String s) throws RemoteException {
+        System.out.println("Changing " + username + "s address to " + s);
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setAddress(s);
+                System.out.println("Success!");
+            }
+        }
+    }
+
     @Override
     public ArrayList<Trip> getTrips()throws RemoteException {
         return trips;

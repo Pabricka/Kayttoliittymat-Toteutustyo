@@ -229,7 +229,7 @@ public class AdminController {
 
             //change the users username in database
             try {
-                Client.dummyData.changeUsername(user_list.getSelectionModel().getSelectedIndex(), u_field.getText());
+                Client.dummyData.changeUsername(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), u_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){
@@ -258,7 +258,7 @@ public class AdminController {
 
             //change the users name in database
             try {
-                Client.dummyData.changeName(user_list.getSelectionModel().getSelectedIndex(), n_field.getText());
+                Client.dummyData.changeName(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), n_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){
@@ -285,7 +285,7 @@ public class AdminController {
             p_button.setText("Edit");
             //change the users password in database
             try {
-                Client.dummyData.changePassword(user_list.getSelectionModel().getSelectedIndex(), p_field.getText());
+                Client.dummyData.changePassword(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), p_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){

@@ -32,6 +32,7 @@ public class LoginController {
 
     @FXML Button log_in_button;
 
+
     public void initialize(){
         grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
