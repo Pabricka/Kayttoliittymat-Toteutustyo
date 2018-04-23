@@ -10,16 +10,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import models.CreditCard;
-import models.Trip;
 
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class PaymentController {
+
+    @FXML
+    private GridPane grid;
 
     @FXML
     private TextField addressTxt;
@@ -68,6 +72,7 @@ public class PaymentController {
 
     public void initialize() {
         initializeInfoFields();
+        initEnterToGo();
         initMethodChoiceUpdate();
         initProceedBtn();
     }
@@ -104,6 +109,15 @@ public class PaymentController {
         }
         expirationBox2.setItems(exp2Items);
 
+    }
+
+    public void initEnterToGo(){
+        grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                proceedButton.fire();
+                ev.consume();
+            }
+        });
     }
 
     public void initMethodChoiceUpdate() {

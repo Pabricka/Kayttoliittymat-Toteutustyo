@@ -1,9 +1,6 @@
 package controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -65,6 +62,16 @@ public class SettingsController {
         initChangePasswordBtn();
     }
 
+    public void initInfoFields() {
+        String[] parts = Client.currentUser.getName().split(" ");
+        firstNameField.setText(parts[0]);
+        lastNameField.setText(parts[1]);
+
+        addressField.setText(Client.currentUser.getAddress());
+
+        initPaymentInfoText();
+    }
+
     public void initCloseBtn() {
         closeBtn.setOnAction(event -> {
             Stage stage = (Stage) closeBtn.getScene().getWindow();
@@ -99,16 +106,6 @@ public class SettingsController {
         });
     }
 
-    public void initInfoFields() {
-        String[] parts = Client.currentUser.getName().split(" ");
-        firstNameField.setText(parts[0]);
-        lastNameField.setText(parts[1]);
-
-        addressField.setText(Client.currentUser.getAddress());
-
-        initPaymentInfoText();
-    }
-
     public void initPaymentInfoText() {
         paymentInfoText.setFill(Color.BLACK);
         if (Client.currentUser.getCreditCard() != null) {
@@ -119,25 +116,10 @@ public class SettingsController {
 
     }
 
-    public boolean validContactInput(String firstName, String lastName, String address) {
-
-        if (firstName.length() < 1 || lastName.length() < 1 || address.length() < 1) {
-            contactMsg.setFill(Color.RED);
-            contactMsg.setText("Fill out all contact info fields!");
-            return false;
-        }
-
-        if (!firstName.matches("[a-zåäöA-ZÅÄÖ]*") || !lastName.matches("[a-zåäöA-ZÅÄÖ]*")) {
-            contactMsg.setFill(Color.RED);
-            contactMsg.setText("Make sure that your name fields only contain letters!");
-            return false;
-        }
-        return true;
-    }
-
     public void initRemovePaymentBtn() {
         removePaymentBtn.setOnAction(e -> {
             contactMsg.setText("");
+            pwMsg.setText("");
             initPaymentInfoText();
 
             if (Client.currentUser.getCreditCard() == null) {
@@ -181,5 +163,21 @@ public class SettingsController {
                 pwMsg.setText("Password changed!");
             }
         });
+    }
+
+    public boolean validContactInput(String firstName, String lastName, String address) {
+
+        if (firstName.length() < 1 || lastName.length() < 1 || address.length() < 1) {
+            contactMsg.setFill(Color.RED);
+            contactMsg.setText("Fill out all contact info fields!");
+            return false;
+        }
+
+        if (!firstName.matches("[a-zåäöA-ZÅÄÖ]*") || !lastName.matches("[a-zåäöA-ZÅÄÖ]*")) {
+            contactMsg.setFill(Color.RED);
+            contactMsg.setText("Make sure that your name fields only contain letters!");
+            return false;
+        }
+        return true;
     }
 }
