@@ -65,6 +65,8 @@ public class UserScreenController {
 
     private String timeString;
 
+    static int amountOfPassengers;
+
     public void initialize() {
 
         populateDepOrArr();
@@ -240,7 +242,7 @@ public class UserScreenController {
 
         List<Trip> foundTrips = new ArrayList<>();
         boolean departure;
-        int amount = Integer.parseInt(passAmount.getValue().toString());
+        amountOfPassengers = Integer.parseInt(passAmount.getValue().toString());
 
         if(departureOrArrival.getValue().equals("Departure")) departure = true;
         else departure = false;
@@ -256,7 +258,7 @@ public class UserScreenController {
         LocalDateTime dateTime = LocalDateTime.of(date, time);
 
         for (Trip trip : trips) {
-            if (connectionMatchesSelection(trip.getConnection()) && isAfterTime(trip, dateTime, departure) && trip.hasSpace(amount)) {
+            if (connectionMatchesSelection(trip.getConnection()) && isAfterTime(trip, dateTime, departure) && trip.hasSpace(amountOfPassengers)) {
                 foundTrips.add(trip);
             }
         }
@@ -282,7 +284,8 @@ public class UserScreenController {
     public boolean isAfterTime(Trip trip, LocalDateTime dateTime, boolean departure) {
         LocalDateTime tripTime = trip.getDepartureTime();
         if(!departure){
-            tripTime.plusHours(trip.getConnection().getLength().getHour()).plusMinutes(trip.getConnection().getLength().getMinute());
+            tripTime = tripTime.plusHours(trip.getConnection().getLength().getHour()).plusMinutes(trip.getConnection().getLength().getMinute());
+            System.out.println(tripTime);
         }
         if(tripTime.toLocalDate().equals(dateTime.toLocalDate()) && tripTime.compareTo(dateTime) >= 0) {
             return true;

@@ -1,21 +1,36 @@
 package models;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class CreditCard {
 
     public enum Provider {
-        VISA, MASTERCARD, AMERICAN_EXPRESS
+        VISA("Visa"),
+        MASTERCARD("MasterCard"),
+        AMEX("American Express");
+
+        private final String name;
+
+        private Provider(String s){
+            name = s;
+        }
+        public boolean equalsName(String otherName) {
+            return name.equals(otherName);
+        }
+
+        public String toString() {
+            return this.name;
+        }
     }
 
     private String number;
-    private String CVC;
+    private String cvv;
     private Provider provider;
-    private LocalDate expirationDate;
+    private YearMonth expirationDate;
 
-    public CreditCard(String number, String CVC, Provider provider, LocalDate expirationDate) {
+    public CreditCard(String number, String cvv, Provider provider, YearMonth expirationDate) {
         this.number = number;
-        this.CVC = CVC;
+        this.cvv = cvv;
         this.provider = provider;
         this.expirationDate = expirationDate;
     }
@@ -29,11 +44,11 @@ public class CreditCard {
     }
 
     public String getCVC() {
-        return CVC;
+        return cvv;
     }
 
     public void setCVC(String CVC) {
-        this.CVC = CVC;
+        this.cvv = CVC;
     }
 
     public Provider getProvider() {
@@ -44,11 +59,11 @@ public class CreditCard {
         this.provider = provider;
     }
 
-    public LocalDate getExpirationDate() {
+    public YearMonth getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(LocalDate expirationDate) {
+    public void setExpirationDate(YearMonth expirationDate) {
         this.expirationDate = expirationDate;
     }
 

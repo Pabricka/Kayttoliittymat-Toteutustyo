@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,15 +33,16 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <TextField fx:id="addressTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="cvcText" maxWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="cvvText" maxWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <ChoiceBox fx:id="methodChoice" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <ChoiceBox fx:id="providerChoice" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <TextField fx:id="lnameText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="ccNumberText" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <Button fx:id="proceedButton" mnemonicParsing="false" text="Proceed" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13" />
+      <Button fx:id="proceedButton" mnemonicParsing="false" text="Proceed" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="13" GridPane.valignment="BOTTOM" />
       <TextField fx:id="emailText" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="fnameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="First name" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
@@ -101,7 +102,7 @@
             <Insets right="5.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Expiration Date" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
+      <Label text="Expiration date (mm/yy)" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -109,7 +110,7 @@
             <Insets right="5.0" />
          </GridPane.margin>
       </Label>
-      <Label text="CVC" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+      <Label text="CVV" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

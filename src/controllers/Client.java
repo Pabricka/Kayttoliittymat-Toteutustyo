@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Trip;
 import models.User;
 import server.DummyData;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ public class Client extends Application {
     static Scene userScreen;
     static Scene adminScreen;
     static DummyData dummyData;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
