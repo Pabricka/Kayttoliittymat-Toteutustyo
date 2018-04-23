@@ -71,4 +71,23 @@ public class Car implements Serializable {
         this.name = name;
     }
 
+    public int getSeatAmount() {
+        return seatAmount;
+    }
+
+    public boolean isForTheAllergic() {
+        return forTheAllergic;
+    }
+
+    public boolean isWheelChairAccess() {
+        return wheelChairAccess;
+    }
+
+    public boolean isPetAllowed() {
+        return petAllowed;
+    }
+
+    public boolean isFamilyCluster() {
+        return familyCluster;
+    }
 }

@@ -84,8 +84,8 @@
                                                 <Font size="18.0" />
                                             </font>
                                         </Text>
-                                        <Button fx:id="u_button" mnemonicParsing="false" onAction="#u_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                        <Button fx:id="n_button" mnemonicParsing="false" onAction="#n_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                        <Button fx:id="u_button" mnemonicParsing="false" onAction="#u_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                        <Button fx:id="n_button" mnemonicParsing="false" onAction="#n_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                         <Button fx:id="p_button" mnemonicParsing="false" onAction="#p_buttonClicked" text="Edit" visible="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                         <TextField fx:id="u_field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                         <TextField fx:id="n_field" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
@@ -103,9 +103,186 @@
                     </content>
                 </Tab>
                 <Tab closable="false" text="Train">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.0" minWidth="10.0" prefWidth="155.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="0.0" prefWidth="42.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="66.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="62.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="43.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="171.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="7.0" prefWidth="102.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="95.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="94.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="53.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="4.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="222.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="362.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="364.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="364.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="364.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="364.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="364.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="364.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="412.0" minHeight="10.0" prefHeight="198.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="353.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ListView fx:id="trains_list" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="85.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="7" />
+                        <Label text="Trains" GridPane.columnIndex="6" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ListView prefHeight="216.0" prefWidth="119.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.rowSpan="6" />
+                        <Label text="Engine" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Cars" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Engine:" GridPane.columnIndex="6" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total seats:" GridPane.columnIndex="6" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="20.0" prefWidth="150.0" text="Allergy-friendly seats:" GridPane.columnIndex="6" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Wheelchair seats:" GridPane.columnIndex="6" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Pet-friendly seats:" GridPane.columnIndex="6" GridPane.rowIndex="7" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Family Clusters:" GridPane.columnIndex="6" GridPane.rowIndex="8" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="7" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="7" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="8" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="7" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="8" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Remove" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                        <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                        <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="4" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                     </children>
+                  </GridPane>
+               </content>
                 </Tab>
                 <Tab closable="false" text="Route">
                     <content>

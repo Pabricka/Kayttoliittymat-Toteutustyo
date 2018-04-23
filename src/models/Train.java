@@ -49,7 +49,7 @@ public class Train implements Serializable {
     }
 
     public void addCar(Car car) {
-        cars.add(car);
+        cars.add(new Car(car.getName(),car.getSeatAmount(), car.isForTheAllergic(),car.isWheelChairAccess(),car.isPetAllowed(),car.isFamilyCluster()));
     }
 }
 
