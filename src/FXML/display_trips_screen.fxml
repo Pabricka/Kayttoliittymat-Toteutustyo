@@ -35,9 +35,9 @@
           <TableColumn fx:id="depColumn" editable="false" sortable="false" text="Departure" />
           <TableColumn fx:id="arrColumn" editable="false" sortable="false" text="Arrival" />
             <TableColumn fx:id="lengthColumn" editable="false" prefWidth="75.0" sortable="false" text="Trip length" />
-            <TableColumn fx:id="typeColumn" editable="false" prefWidth="120.0" sortable="false" text="Train type" />
+            <TableColumn fx:id="typeColumn" editable="false" sortable="false" text="Train type" />
             <TableColumn fx:id="priceColumn" editable="false" prefWidth="50.0" sortable="false" text="Price" />
-            <TableColumn fx:id="serviceColumn" editable="false" prefWidth="490.0" sortable="false" text="Services" />
+            <TableColumn fx:id="serviceColumn" editable="false" prefWidth="530.0" sortable="false" text="Services" />
             <TableColumn fx:id="actionColumn" editable="false" prefWidth="55.0" resizable="false" sortable="false" />
         </columns>
       </TableView>
