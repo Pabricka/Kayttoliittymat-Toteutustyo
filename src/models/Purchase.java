@@ -50,7 +50,7 @@ public class Purchase implements Serializable {
         this.seatNumber = seatNumber;
     }
 
-    public String getStrings(){
+    public String getStrings() {
         String information = buyer.getName() + "  " + trip.getDepartureTime().toLocalDate().toString() + " " + trip.getConnection().getFrom().toString() + "  " + trip.getConnection().getTo().toString();
         return information;
     }

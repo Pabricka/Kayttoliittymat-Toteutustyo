@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class Seat implements Serializable{
+public class Seat implements Serializable {
 
     private boolean free;
     private boolean forTheAllergic;
@@ -26,7 +26,7 @@ public class Seat implements Serializable{
         this.free = free;
     }
 
-    public void normalizeSeat(){
+    public void normalizeSeat() {
         forTheAllergic = false;
         familyCluster = false;
         wheelChairAccess = false;

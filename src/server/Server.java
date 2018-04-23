@@ -21,7 +21,7 @@ public class Server implements DummyData {
     private static ArrayList<Trip> trips;
     private static ArrayList<Purchase> purchases;
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
         users = new ArrayList<>();
         trips = new ArrayList<>();
@@ -40,7 +40,7 @@ public class Server implements DummyData {
             System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             Registry registry = LocateRegistry.createRegistry(1099);
 
-            System.out.println( InetAddress.getLocalHost().getHostAddress());
+            System.out.println(InetAddress.getLocalHost().getHostAddress());
             registry.bind("DummyData", stub);
 
             System.out.println("Server ready");
@@ -52,44 +52,42 @@ public class Server implements DummyData {
 
     @Override
     public void createNewUser(String name, String address, String username, String password, Boolean admin) {
-        users.add(new User(name,address,username,password,admin));
+        users.add(new User(name, address, username, password, admin));
 
     }
 
     private static void initializeDummyData() {
-        users.add(new User("Juha Mieto", "1539 Long Street","Mämmi666", "1234", false));
-        users.add(new User("Jari Mentula", "120 Highland Drive","Bull", "maitorahka", true));
-        users.add(new User("Alvin J", "1196 Northwest Boulevard","Ellis", "dolor", false));
-        users.add(new User("Beverly Z", "3641 Charles Street","Lucas", "Nullam", false));
-        users.add(new User("Odysseus I", "3103 Ritter Avenue","Russo", "bibendum", false));
-        users.add(new User("Carlos U", "1973 Gore Street","Meyers", "Aliquam", false));
-        users.add(new User("Kevin M", "1138 Carriage Lane","Monroe", "ante", false));
-        users.add(new User("Clare W", "4168 Newton Street","Hammond", "Quisque", false));
-        users.add(new User("Sonya A", "2680 Sycamore Lake Road","Hopper", "mollis", false));
-        users.add(new User("admin A", "4 Goldfield Rd. Honolulu, HI 96815","a", "a", true));
+        users.add(new User("Juha Mieto", "1539 Long Street", "Mämmi666", "1234", false));
+        users.add(new User("Jari Mentula", "120 Highland Drive", "Bull", "maitorahka", true));
+        users.add(new User("Alvin J", "1196 Northwest Boulevard", "Ellis", "dolor", false));
+        users.add(new User("Beverly Z", "3641 Charles Street", "Lucas", "Nullam", false));
+        users.add(new User("Odysseus I", "3103 Ritter Avenue", "Russo", "bibendum", false));
+        users.add(new User("Carlos U", "1973 Gore Street", "Meyers", "Aliquam", false));
+        users.add(new User("Kevin M", "1138 Carriage Lane", "Monroe", "ante", false));
+        users.add(new User("Clare W", "4168 Newton Street", "Hammond", "Quisque", false));
+        users.add(new User("Sonya A", "2680 Sycamore Lake Road", "Hopper", "mollis", false));
+        users.add(new User("admin A", "4 Goldfield Rd. Honolulu, HI 96815", "a", "a", true));
 
 
         //generate a lot of trains
-        for(int i=0; i<166; i++){
-            trains.add(new Train("UTU" + i+1));
+        for (int i = 0; i < 166; i++) {
+            trains.add(new Train("UTU" + i + 1));
         }
         //and some more
         trains.add(new Train("UTU666"));
         trains.add(new Train("Thomas the Tank Engine"));
 
 
-
-        carTypes.add(new Car("Passenger car", 20,true, false, false, false));
-        carTypes.add(new Car("Pet car", 12,false, false, true, false));
-        carTypes.add(new Car("Family car", 15,true, true, false, true));
-        carTypes.add(new Car("Paladin car", 8,true, true, false, false));
-
+        carTypes.add(new Car("Passenger car", 20, true, false, false, false));
+        carTypes.add(new Car("Pet car", 12, false, false, true, false));
+        carTypes.add(new Car("Family car", 15, true, true, false, true));
+        carTypes.add(new Car("Paladin car", 8, true, true, false, false));
 
 
         //generate cars to trains
         Random rnd = new Random();
-        for(Train train : trains){
-            for(int i=0; i<rnd.nextInt(5)+1; i++){
+        for (Train train : trains) {
+            for (int i = 0; i < rnd.nextInt(5) + 1; i++) {
                 train.addCar(carTypes.get(rnd.nextInt(carTypes.size())));
             }
         }
@@ -113,8 +111,8 @@ public class Server implements DummyData {
         int tmpTrainCounter = 0;
         for (Connection connection : connections) {
             connection.setTimes(connectionTimes);
-            for(LocalTime time : connectionTimes){
-                for(int i = 0; i < 7; i++) {
+            for (LocalTime time : connectionTimes) {
+                for (int i = 0; i < 7; i++) {
                     LocalDate now = LocalDate.now();
                     LocalDate date = now.plusDays(i);
                     trips.add(new Trip(trains.get(tmpTrainCounter), connection, date, time));
@@ -122,15 +120,15 @@ public class Server implements DummyData {
                 }
             }
         }
-        for(Trip trip : trips){
-            for(int i= 0; i<=rnd.nextInt(trip.getTrain().getSeats());i++){
+        for (Trip trip : trips) {
+            for (int i = 0; i <= rnd.nextInt(trip.getTrain().getSeats()); i++) {
 
                 // ¯\_(ツ)_/¯
                 int tmpCar = rnd.nextInt(trip.getTrain().getCars().size());
                 int tmpSeat = rnd.nextInt(trip.getTrain().getCars().get(tmpCar).getSeats().size());
 
 
-                if(trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).isFree()) {
+                if (trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).isFree()) {
                     purchases.add(new Purchase(users.get(rnd.nextInt(users.size())), trip, tmpCar, tmpSeat));
                     trip.getTrain().getCars().get(tmpCar).getSeats().get(tmpSeat).setFree(false);
                 }
@@ -147,8 +145,8 @@ public class Server implements DummyData {
     @Override
     public void changeName(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s name to " + s);
-        for(User u: users){
-            if(u.getUsername().equals(username)){
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
                 u.setName(s);
                 System.out.println("Success!");
             }
@@ -159,8 +157,8 @@ public class Server implements DummyData {
     @Override
     public void changeUsername(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "'s username to " + s);
-        for(User u: users){
-            if(u.getUsername().equals(username)){
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
                 u.setUsername(s);
                 System.out.println("Success!");
             }
@@ -170,8 +168,8 @@ public class Server implements DummyData {
     @Override
     public void changePassword(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s password to " + s);
-        for(User u: users){
-            if(u.getUsername().equals(username)){
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
                 u.setPassword(s);
                 System.out.println("Success!");
             }
@@ -181,8 +179,8 @@ public class Server implements DummyData {
     @Override
     public void changeAddress(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s address to " + s);
-        for(User u: users){
-            if(u.getUsername().equals(username)){
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
                 u.setAddress(s);
                 System.out.println("Success!");
             }
@@ -190,7 +188,7 @@ public class Server implements DummyData {
     }
 
     @Override
-    public ArrayList<Trip> getTrips()throws RemoteException {
+    public ArrayList<Trip> getTrips() throws RemoteException {
         return trips;
     }
 

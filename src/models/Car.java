@@ -14,8 +14,8 @@ public class Car implements Serializable {
 
 
     public Car(String name, int seatAmount, boolean forTheAllergic, boolean wheelChairAccess, boolean petAllowed, boolean familyCluster) {
-        if(seatAmount > 20) seatAmount = 20;
-        else if(seatAmount < 8) seatAmount = 8;
+        if (seatAmount > 20) seatAmount = 20;
+        else if (seatAmount < 8) seatAmount = 8;
         this.name = name;
         this.seatAmount = seatAmount;
         this.seats = new ArrayList<>(seatAmount);
@@ -28,11 +28,11 @@ public class Car implements Serializable {
     }
 
 
-    public void populateCar(){
-        for(int i = 0; i < seatAmount; i++){
+    public void populateCar() {
+        for (int i = 0; i < seatAmount; i++) {
             seats.add(new Seat(true, false, false, false, false));
         }
-        if(familyCluster){
+        if (familyCluster) {
             seats.get(0).setFamilyCluster(true);
             seats.get(1).setFamilyCluster(true);
             seats.get(4).setFamilyCluster(true);
@@ -40,22 +40,21 @@ public class Car implements Serializable {
 
         }
 
-        if(wheelChairAccess){
+        if (wheelChairAccess) {
             seats.get(2).setWheelChairAccess(true);
             seats.get(3).setWheelChairAccess(true);
         }
 
-        if(petAllowed && !forTheAllergic){
-            seats.get(seats.size()-1).setPetAllowed(true);
-            seats.get(seats.size()-2).setPetAllowed(true);
-        }
-        else if(forTheAllergic && !petAllowed){
-            seats.get(seats.size()-1).setForTheAllergic(true);
-            seats.get(seats.size()-2).setForTheAllergic(true);
+        if (petAllowed && !forTheAllergic) {
+            seats.get(seats.size() - 1).setPetAllowed(true);
+            seats.get(seats.size() - 2).setPetAllowed(true);
+        } else if (forTheAllergic && !petAllowed) {
+            seats.get(seats.size() - 1).setForTheAllergic(true);
+            seats.get(seats.size() - 2).setForTheAllergic(true);
         }
     }
 
-    public ArrayList<Seat> getSeats(){
+    public ArrayList<Seat> getSeats() {
         return seats;
     }
 

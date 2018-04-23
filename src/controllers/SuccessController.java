@@ -9,11 +9,11 @@ public class SuccessController {
     @FXML
     Button goStartBtn;
 
-    public void initialize(){
+    public void initialize() {
         goStartBtn.setOnAction(e -> {
             try {
                 controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/user_screen.fxml"))));
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });

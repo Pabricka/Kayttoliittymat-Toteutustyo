@@ -44,27 +44,27 @@ public class Trip implements Comparable<Trip>, Serializable {
 
     @Override
     public int compareTo(Trip o) {
-        return(departureTime.compareTo(o.departureTime));
+        return (departureTime.compareTo(o.departureTime));
     }
 
-    public boolean hasSpace(int amount){
+    public boolean hasSpace(int amount) {
         int free = 0;
         List<Seat> seats;
         List<Car> cars = train.getCars();
-        for(Car car : cars){
+        for (Car car : cars) {
             seats = car.getSeats();
-            for(Seat seat : seats){
-                if(seat.isFree()){
+            for (Seat seat : seats) {
+                if (seat.isFree()) {
                     free++;
                 }
             }
         }
         System.out.println(free);
-        if(free >= amount) return true;
+        if (free >= amount) return true;
         else return false;
     }
 
-    public String toString(){
+    public String toString() {
         return departureTime.toString() + " " + connection.getFrom().toString() + " " + connection.getTo().toString();
     }
 }

@@ -14,7 +14,8 @@ public class Train implements Serializable {
         this.cars = cars;
 
     }
-    public Train(String engine){
+
+    public Train(String engine) {
         this.engine = engine;
         cars = new ArrayList<>();
     }
@@ -49,7 +50,7 @@ public class Train implements Serializable {
     }
 
     public void addCar(Car car) {
-        cars.add(new Car(car.getName(),car.getSeatAmount(), car.isForTheAllergic(),car.isWheelChairAccess(),car.isPetAllowed(),car.isFamilyCluster()));
+        cars.add(new Car(car.getName(), car.getSeatAmount(), car.isForTheAllergic(), car.isWheelChairAccess(), car.isPetAllowed(), car.isFamilyCluster()));
     }
 }
 

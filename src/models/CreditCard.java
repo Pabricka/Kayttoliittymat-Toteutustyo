@@ -11,9 +11,10 @@ public class CreditCard {
 
         private final String name;
 
-        private Provider(String s){
+        private Provider(String s) {
             name = s;
         }
+
         public boolean equalsName(String otherName) {
             return name.equals(otherName);
         }
@@ -67,8 +68,8 @@ public class CreditCard {
         this.expirationDate = expirationDate;
     }
 
-    public String toString(){
-        String endNum = number.substring(number.length()-3, number.length());
+    public String toString() {
+        String endNum = number.substring(number.length() - 3, number.length());
         return provider.toString() + " ending with " + endNum;
     }
 }

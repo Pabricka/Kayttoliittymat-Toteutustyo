@@ -11,7 +11,7 @@ public class Connection implements Serializable {
     private int price;
     private ArrayList<LocalTime> times;
 
-    public Connection(Station from,Station to, int price, LocalTime length){
+    public Connection(Station from, Station to, int price, LocalTime length) {
         this.from = from;
         this.to = to;
         this.price = price;
@@ -39,7 +39,6 @@ public class Connection implements Serializable {
     public LocalTime getLength() {
         return length;
     }
-
 
 
     public void setLength(LocalTime length) {

@@ -57,7 +57,7 @@ public class SettingsController {
     private String address;
     private String paymentInfo;
 
-    public void initialize(){
+    public void initialize() {
         initCloseBtn();
         initContactInfoBtn();
         initInfoFields();
@@ -65,14 +65,14 @@ public class SettingsController {
         initChangePasswordBtn();
     }
 
-    public void initCloseBtn(){
+    public void initCloseBtn() {
         closeBtn.setOnAction(event -> {
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.close();
         });
     }
 
-    public void initContactInfoBtn(){
+    public void initContactInfoBtn() {
         updateContactBtn.setOnAction(e -> {
             pwMsg.setText("");
             initPaymentInfoText();
@@ -80,7 +80,7 @@ public class SettingsController {
             lastName = lastNameField.getText();
             address = addressField.getText();
 
-            if(validContactInput(firstName, lastName, address)) {
+            if (validContactInput(firstName, lastName, address)) {
                 Client.currentUser.setName(firstName + " " + lastName);
                 Client.currentUser.setAddress(address);
 
@@ -88,8 +88,7 @@ public class SettingsController {
                 try {
                     Client.dummyData.changeName(Client.currentUser.getUsername(), firstName + " " + lastName);
                     Client.dummyData.changeAddress(Client.currentUser.getUsername(), address);
-                }
-                catch (Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
 
@@ -110,9 +109,9 @@ public class SettingsController {
         initPaymentInfoText();
     }
 
-    public void initPaymentInfoText(){
+    public void initPaymentInfoText() {
         paymentInfoText.setFill(Color.BLACK);
-        if(Client.currentUser.getCreditCard() != null){
+        if (Client.currentUser.getCreditCard() != null) {
             paymentInfoText.setText(Client.currentUser.getCreditCard().toString());
         } else {
             paymentInfoText.setText("No info saved");
@@ -120,15 +119,15 @@ public class SettingsController {
 
     }
 
-    public boolean validContactInput(String firstName, String lastName, String address){
+    public boolean validContactInput(String firstName, String lastName, String address) {
 
-        if(firstName.length() < 1 || lastName.length() < 1 || address.length() < 1){
+        if (firstName.length() < 1 || lastName.length() < 1 || address.length() < 1) {
             contactMsg.setFill(Color.RED);
             contactMsg.setText("Fill out all contact info fields!");
             return false;
         }
 
-        if (!firstName.matches("[a-zåäöA-ZÅÄÖ]*") || !lastName.matches("[a-zåäöA-ZÅÄÖ]*")){
+        if (!firstName.matches("[a-zåäöA-ZÅÄÖ]*") || !lastName.matches("[a-zåäöA-ZÅÄÖ]*")) {
             contactMsg.setFill(Color.RED);
             contactMsg.setText("Make sure that your name fields only contain letters!");
             return false;
@@ -136,12 +135,12 @@ public class SettingsController {
         return true;
     }
 
-    public void initRemovePaymentBtn(){
+    public void initRemovePaymentBtn() {
         removePaymentBtn.setOnAction(e -> {
             contactMsg.setText("");
             initPaymentInfoText();
 
-            if(Client.currentUser.getCreditCard() == null){
+            if (Client.currentUser.getCreditCard() == null) {
                 paymentInfoText.setFill(Color.RED);
                 paymentInfoText.setText("There if no info to remove!");
                 return;
@@ -151,7 +150,8 @@ public class SettingsController {
             paymentInfoText.setText("Info removed!");
         });
     }
-    public void initChangePasswordBtn(){
+
+    public void initChangePasswordBtn() {
         changePasswordBtn.setOnAction(e -> {
 
             contactMsg.setText("");
@@ -161,22 +161,20 @@ public class SettingsController {
             String newPw = newPasswordField.getText();
             String confPw = confirmPasswordField.getText();
 
-            if(oldPw.length() < 1 || newPw.length() < 1 || confPw.length() < 1) {
+            if (oldPw.length() < 1 || newPw.length() < 1 || confPw.length() < 1) {
                 pwMsg.setFill(Color.RED);
                 pwMsg.setText("Make sure that none of the password fields are empty!");
                 return;
             }
-            if(!oldPw.equals(Client.currentUser.getPassword()) || !(newPw.equals(confPw))){
+            if (!oldPw.equals(Client.currentUser.getPassword()) || !(newPw.equals(confPw))) {
                 pwMsg.setFill(Color.RED);
                 pwMsg.setText("The given password doesn't match your current\n password or the new passwords don't match!");
                 return;
-            }
-            else {
+            } else {
                 Client.currentUser.setPassword(newPw);
                 try {
                     Client.dummyData.changePassword(Client.currentUser.getUsername(), newPw);
-                }
-                catch (Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 pwMsg.setFill(Color.GREEN);

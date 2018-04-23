@@ -32,10 +32,11 @@ public class LoginController {
     @FXML
     private GridPane grid;
 
-    @FXML Button log_in_button;
+    @FXML
+    Button log_in_button;
 
 
-    public void initialize(){
+    public void initialize() {
         grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
                 log_in_button.fire();
@@ -50,21 +51,20 @@ public class LoginController {
         controllers.Client.stage.setScene(controllers.Client.createAccountScreen);
     }
 
-    public void Login_buttonClicked(){
+    public void Login_buttonClicked() {
 
 
-        if(username_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")){
-            if(username_field.getText().length()<1){
-                info_text.setText("Username can't be" + System.getProperty("line.separator") +  "empty!");
-            }
-            else if(password_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")) {
-                    if(password_field.getText().length()<1){
-                        info_text.setText("Password can't be" + System.getProperty("line.separator") +  "empty!");
-                    }
+        if (username_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")) {
+            if (username_field.getText().length() < 1) {
+                info_text.setText("Username can't be" + System.getProperty("line.separator") + "empty!");
+            } else if (password_field.getText().matches("[a-zåäöA-ZÅÄÖ0-9]*")) {
+                if (password_field.getText().length() < 1) {
+                    info_text.setText("Password can't be" + System.getProperty("line.separator") + "empty!");
+                }
 
-                    try{
-                        ArrayList<User> users =  controllers.Client.dummyData.getUsers();
-                    for(User user : users) {
+                try {
+                    ArrayList<User> users = controllers.Client.dummyData.getUsers();
+                    for (User user : users) {
                         if (user.getUsername().equals(username_field.getText()) && user.getPassword().equals(password_field.getText())) {
                             System.out.println(user.getName() + " logged in");
                             controllers.Client.currentUser = user;
@@ -78,18 +78,15 @@ public class LoginController {
                             }
                         }
                     }
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    info_text.setText("Username and password" + System.getProperty("line.separator") +" do not match");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                info_text.setText("Username and password" + System.getProperty("line.separator") + " do not match");
+            } else {
+                info_text.setText("Password must contain" + System.getProperty("line.separator") + "only letters!");
             }
-            else {
-                info_text.setText("Password must contain" + System.getProperty("line.separator") +  "only letters!");
-            }
-        }
-        else {
-            info_text.setText("Username must contain" + System.getProperty("line.separator") +  "only letters!");
+        } else {
+            info_text.setText("Username must contain" + System.getProperty("line.separator") + "only letters!");
             return;
         }
 

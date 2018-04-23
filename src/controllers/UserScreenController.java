@@ -123,19 +123,19 @@ public class UserScreenController {
 
     public void initSettingsButton() {
         settingsButton.setOnAction(event -> {
-                Parent root;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/FXML/settings_screen.fxml"));
-                    Stage stage = new Stage();
-                    stage.setTitle("Settings");
-                    stage.initModality(Modality.WINDOW_MODAL);
-                    stage.initOwner(
-                            ((Node) event.getSource()).getScene().getWindow());
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/FXML/settings_screen.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Settings");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(
+                        ((Node) event.getSource()).getScene().getWindow());
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -144,7 +144,9 @@ public class UserScreenController {
             if (!validateInput()) return;
             foundTrips = searchForTrips();
 
-            if(foundTrips.size() == 0){
+            if (foundTrips.size() != 0) {
+
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error!");
                 alert.setHeaderText("Couldn't find any trips to match criteria!");
@@ -222,7 +224,7 @@ public class UserScreenController {
             }
         }
 
-        if(!valid){
+        if (!valid) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error!");
             alert.setHeaderText("Error in reading time");
@@ -235,16 +237,11 @@ public class UserScreenController {
 
     public List<Trip> searchForTrips() {
 
-        System.out.println("Trips in database:");
-        for(Trip trip : trips){
-            System.out.println(trip + " " + trip.getTrain().getSeats());
-        }
-
         List<Trip> foundTrips = new ArrayList<>();
         boolean departure;
         amountOfPassengers = Integer.parseInt(passAmount.getValue().toString());
 
-        if(departureOrArrival.getValue().equals("Departure")) departure = true;
+        if (departureOrArrival.getValue().equals("Departure")) departure = true;
         else departure = false;
 
         try {
@@ -264,10 +261,6 @@ public class UserScreenController {
         }
 
         Collections.sort(foundTrips);
-        System.out.println("Found trips:");
-        for(Trip trip : foundTrips){
-            System.out.println(trip);
-        }
         return foundTrips;
     }
 
@@ -283,11 +276,10 @@ public class UserScreenController {
 
     public boolean isAfterTime(Trip trip, LocalDateTime dateTime, boolean departure) {
         LocalDateTime tripTime = trip.getDepartureTime();
-        if(!departure){
+        if (!departure) {
             tripTime = tripTime.plusHours(trip.getConnection().getLength().getHour()).plusMinutes(trip.getConnection().getLength().getMinute());
-            System.out.println(tripTime);
         }
-        if(tripTime.toLocalDate().equals(dateTime.toLocalDate()) && tripTime.compareTo(dateTime) >= 0) {
+        if (tripTime.toLocalDate().equals(dateTime.toLocalDate()) && tripTime.compareTo(dateTime) >= 0) {
             return true;
         }
         return false;

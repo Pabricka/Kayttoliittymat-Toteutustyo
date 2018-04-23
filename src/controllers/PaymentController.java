@@ -66,13 +66,13 @@ public class PaymentController {
     private ObservableList<Integer> exp2Items;
 
 
-    public void initialize(){
+    public void initialize() {
         initializeInfoFields();
         initMethodChoiceUpdate();
         initProceedBtn();
     }
 
-    public void initializeInfoFields(){
+    public void initializeInfoFields() {
 
         methodItems = FXCollections.observableArrayList();
         providerItems = FXCollections.observableArrayList();
@@ -89,26 +89,26 @@ public class PaymentController {
         methodChoice.setItems(methodItems);
 
 
-        for(CreditCard.Provider provider : CreditCard.Provider.values()){
+        for (CreditCard.Provider provider : CreditCard.Provider.values()) {
             providerItems.add(provider.toString());
         }
         providerChoice.setItems(providerItems);
 
-        for(int i = 1;  i < 13; i++){
+        for (int i = 1; i < 13; i++) {
             exp1Items.add(i);
         }
         expirationBox1.setItems(exp1Items);
 
-        for(int i = 18; i < 26; i++){
+        for (int i = 18; i < 26; i++) {
             exp2Items.add(i);
         }
         expirationBox2.setItems(exp2Items);
 
     }
 
-    public void initMethodChoiceUpdate(){
+    public void initMethodChoiceUpdate() {
         methodChoice.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Number>) (observableValue, oldValue, newValue) -> {
-            if((Integer) newValue == 1){
+            if ((Integer) newValue == 1) {
                 providerChoice.setDisable(true);
                 ccNumberText.setDisable(true);
                 cvvText.setDisable(true);
@@ -116,7 +116,7 @@ public class PaymentController {
                 expirationBox2.setDisable(true);
                 savePaymentInfo.setDisable(true);
             }
-            if((Integer) newValue == 0){
+            if ((Integer) newValue == 0) {
                 providerChoice.setDisable(false);
                 ccNumberText.setDisable(false);
                 cvvText.setDisable(false);
@@ -126,20 +126,17 @@ public class PaymentController {
             }
         });
     }
-    public void initProceedBtn(){
+
+    public void initProceedBtn() {
         proceedButton.setOnAction(e -> {
             errorMsg.setText("");
-            if(methodChoice.getSelectionModel().getSelectedIndex() == -1){
+            if (methodChoice.getSelectionModel().getSelectedIndex() == -1) {
                 errorMsg.setText("Select a method of payment!");
                 return;
-            }
-
-            else if(methodChoice.getSelectionModel().getSelectedIndex() == 0){
-                if(!validateContactInput() || !validateCCinput()) return;
-            }
-
-            else {
-                if(!validateContactInput()) return;
+            } else if (methodChoice.getSelectionModel().getSelectedIndex() == 0) {
+                if (!validateContactInput() || !validateCCinput()) return;
+            } else {
+                if (!validateContactInput()) return;
             }
 //            FOR VALITTU PENKKI IN VALITUT PENKIT
 //            Purchase purchase = new Purchase(Client.currentUser, SELECTED_TRIP, SELECTED_PENKKI, SELECTED_VAUNU);
@@ -152,24 +149,24 @@ public class PaymentController {
 //            }
             try {
                 controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/success_screen.fxml"))));
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
         });
     }
 
-    public boolean validateContactInput(){
+    public boolean validateContactInput() {
         String fname = fnameText.getText();
         String lname = lnameText.getText();
         String address = addressTxt.getText();
         String email = emailText.getText();
 
-        if(fname.length() < 1 || lname.length() < 1 || address.length() < 1 || email.length() < 1){
+        if (fname.length() < 1 || lname.length() < 1 || address.length() < 1 || email.length() < 1) {
             errorMsg.setText("Fill out your contact information!");
             return false;
         }
-        if (!fname.matches("[a-zåäöA-ZÅÄÖ]*") || !lname.matches("[a-zåäöA-ZÅÄÖ]*")){
+        if (!fname.matches("[a-zåäöA-ZÅÄÖ]*") || !lname.matches("[a-zåäöA-ZÅÄÖ]*")) {
             errorMsg.setText("Your name can only contain letters!");
             return false;
         }
@@ -197,7 +194,7 @@ public class PaymentController {
         int expYear = 2000 + (Integer) expirationBox2.getSelectionModel().getSelectedItem();
         String expMonthString = expirationBox1.getSelectionModel().getSelectedItem().toString();
 
-        if(expMonthString.length() == 1) expMonthString = "0"+expMonth;
+        if (expMonthString.length() == 1) expMonthString = "0" + expMonth;
 
 
         if (ccNumber.length() != 16 || cvvNumber.length() != cvvLength || !cvvNumber.matches("[0-9]+") ||
