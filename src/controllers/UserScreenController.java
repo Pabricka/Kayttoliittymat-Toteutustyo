@@ -155,7 +155,6 @@ public class UserScreenController {
     public void initSettingsButton() {
         settingsButton.setOnAction(event -> {
             Parent root;
-            System.out.println(Client.currentUser);
             try {
                 root = FXMLLoader.load(getClass().getResource("/FXML/settings_screen.fxml"));
                 Stage stage = new Stage();
