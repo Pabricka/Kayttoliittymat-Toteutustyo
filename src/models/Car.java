@@ -58,8 +58,14 @@ public class Car implements Serializable {
         return seats;
     }
 
-    public void setSeats(ArrayList<Seat> seats) {
-        this.seats = seats;
+    public void setSeatAmount(int s) {
+
+        this.seats.clear();
+
+        if (s > 20) s = 20;
+        else if (s < 8) s = 8;
+        seatAmount = s;
+        populateCar();
     }
 
     public String getName() {
@@ -89,4 +95,30 @@ public class Car implements Serializable {
     public boolean isFamilyCluster() {
         return familyCluster;
     }
+
+    public void setForTheAllergic(boolean forTheAllergic) {
+        this.forTheAllergic = forTheAllergic;
+        seats.get(seats.size() - 1).setForTheAllergic(forTheAllergic);
+        seats.get(seats.size() - 2).setForTheAllergic(forTheAllergic);
+    }
+
+    public void setWheelChairAccess(boolean wheelChairAccess) {
+        this.wheelChairAccess = wheelChairAccess;
+        seats.get(2).setWheelChairAccess(wheelChairAccess);
+        seats.get(3).setWheelChairAccess(wheelChairAccess);
+    }
+
+    public void setPetAllowed(boolean petAllowed) {
+        this.petAllowed = petAllowed;
+        seats.get(seats.size() - 1).setPetAllowed(petAllowed);
+        seats.get(seats.size() - 2).setPetAllowed(petAllowed);
+    }
+
+    public void setFamilyCluster(boolean familyCluster) {
+        this.familyCluster = familyCluster;
+        seats.get(0).setFamilyCluster(familyCluster);
+        seats.get(1).setFamilyCluster(familyCluster);
+        seats.get(4).setFamilyCluster(familyCluster);
+        seats.get(5).setFamilyCluster(familyCluster);
+        }
 }

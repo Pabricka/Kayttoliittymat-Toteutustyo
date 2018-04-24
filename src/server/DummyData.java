@@ -6,7 +6,6 @@ import models.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface DummyData extends Remote {
 
@@ -16,6 +15,8 @@ public interface DummyData extends Remote {
     void changeUsername(String username, String s) throws RemoteException;
     void changePassword(String username, String s) throws RemoteException;
     void changeAddress(String username, String s) throws RemoteException;
+    ArrayList<Car> getCarTypes() throws RemoteException;
+    void addCarType(Car car) throws RemoteException;
     ArrayList<Trip> getTrips() throws RemoteException;
     ArrayList<Purchase> getPurchases() throws RemoteException;
 }

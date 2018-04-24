@@ -1,11 +1,14 @@
 package controllers;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import models.Purchase;
-import models.Trip;
-import models.Station;
-import models.User;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import models.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,8 +25,10 @@ import java.util.List;
 
 
 public class AdminController {
-    List<User> users;
-    List<Purchase> journeys;
+
+    static private List<User> users;
+    static private List<Purchase> journeys;
+    static List<Car> carTypes;
 
     @FXML
     ListView<String> user_list;
@@ -63,7 +69,8 @@ public class AdminController {
 
     @FXML
     ComboBox<String> sort_box;
-
+    @FXML
+    ChoiceBox<String> carTypes_box;
 
     @FXML
     Label from_label;
@@ -88,16 +95,18 @@ public class AdminController {
     @FXML
     Label date_label;
 
-    private ObservableList<String> toStations;
-    private ObservableList<String> fromStations;
+    private ObservableList<String> toStations = FXCollections.observableArrayList();
+    private ObservableList<String> fromStations = FXCollections.observableArrayList();
 
 
 
+    static ObservableList<String> carTypes_list = FXCollections.observableArrayList();
 
 
 
-    static ObservableList<String> items;
-    static  ObservableList<String>  journey_items;
+    static ObservableList<String> items = FXCollections.observableArrayList();
+    private static ObservableList<String>  journey_items = FXCollections.observableArrayList();
+
 
 
     @FXML
@@ -118,7 +127,7 @@ public class AdminController {
         sort_box.getItems().removeAll(sort_box.getItems());
         sort_box.getItems().addAll("user", "date", "connection");
         sort_box.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (sort_box.getSelectionModel().getSelectedItem() == "connection") {
+            if (sort_box.getSelectionModel().getSelectedItem().equals("connection")) {
 
                 journeys.sort(Comparator.comparing(o -> o.getTrip().getConnection().getFrom().toString()));
                 journey_items = FXCollections.observableArrayList();
@@ -127,7 +136,7 @@ public class AdminController {
                 }
 
                 journey_list.setItems(journey_items);
-            } else if (sort_box.getSelectionModel().getSelectedItem() == "user") {
+            } else if (sort_box.getSelectionModel().getSelectedItem().equals("user")) {
 
 
                 journeys.sort(Comparator.comparing(o -> o.getBuyer().getName()));
@@ -156,24 +165,14 @@ public class AdminController {
         try {
             users = Client.dummyData.getUsers();
             journeys = Client.dummyData.getPurchases();
+            carTypes = Client.dummyData.getCarTypes();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        items = FXCollections.observableArrayList();
-        journey_items = FXCollections.observableArrayList();
-        for (User user : users) {
-            items.add(user.getUsername());
-        }
-        for (Purchase journey : journeys) {
-            journey_items.add(journey.getStrings());
-        }
         user_list.setItems(items);
         journey_list.setItems(journey_items);
         user_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    System.out.println("ListView selection changed from oldValue = "
-                            + oldValue + " to newValue = " + newValue);
                     u_text.setText("Username: ");
                     n_text.setText("Name: ");
                     p_text.setText("Password: ");
@@ -187,14 +186,11 @@ public class AdminController {
                 }
         );
         journey_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("ListView selection changed from oldValue = "
-                    + oldValue + " to newValue = " + newValue);
             from_label.setVisible(true);
             to_label.setVisible(true);
             date_label.setVisible(true);
             edit_connection.setVisible(true);
             edit_date.setVisible(true);
-            System.out.println(journey_list.getSelectionModel().getSelectedIndex());
             from_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getConnection().getFrom().toString());
             to_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getConnection().getTo().toString());
             date_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getDepartureTime().toLocalDate().toString());
@@ -206,10 +202,29 @@ public class AdminController {
             if (!isStationInList(from, fromStations)) fromStations.add(from.toString());
 
         }
+        carTypes_box.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+            if(newValue.equals("New Type")){
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/FXML/car_preview.fxml"));
+                    Stage stage = new Stage();
+                    stage.setTitle("New Car Type Preview");
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(Client.adminScreen.getWindow());
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        carTypes_box.setItems(carTypes_list);
         from_choice.setItems(fromStations);
         to_choice.setItems(toStations);
 
     }
+
     private boolean isStationInList(Station station, List<String> stations){
         for(String s : stations){
             if(station.toString().equals(s)) return true;
@@ -321,6 +336,30 @@ public class AdminController {
             edit_date.setText("Edit");
             pick_date.setVisible(false);
         }
+
+    }
+
+    public void onTabChange(){
+        try {
+            users = Client.dummyData.getUsers();
+            journeys = Client.dummyData.getPurchases();
+            carTypes = Client.dummyData.getCarTypes();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        items.clear();
+        journey_items.clear();
+        carTypes_list.clear();
+            for (User user : users) {
+                items.add(user.getUsername());
+            }
+            for (Purchase journey : journeys) {
+                journey_items.add(journey.getStrings());
+            }
+            for(Car car : carTypes){
+                carTypes_list.add(car.getName());
+            }
+            carTypes_list.add("New Type");
 
     }
 
