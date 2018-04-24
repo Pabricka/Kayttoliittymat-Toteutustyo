@@ -44,11 +44,11 @@ public class CreditCard {
         this.number = number;
     }
 
-    public String getCVC() {
+    public String getCVV() {
         return cvv;
     }
 
-    public void setCVC(String CVC) {
+    public void setCVV(String CVC) {
         this.cvv = CVC;
     }
 

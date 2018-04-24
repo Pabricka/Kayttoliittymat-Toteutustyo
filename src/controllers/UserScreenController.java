@@ -72,8 +72,11 @@ public class UserScreenController {
 
     public void initialize() {
 
+        //Populate choice boxes
         populateDepOrArr();
         populatePassengerAmontBox();
+
+        //Init components and add interactivity
         initEnterToGo();
         initDatePicker();
         initToFromBoxes();
@@ -81,6 +84,9 @@ public class UserScreenController {
         initSearchButton();
     }
 
+    /**
+     * Makes it so that enter can be used to search for trips
+     */
     public void initEnterToGo() {
         grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
@@ -90,6 +96,9 @@ public class UserScreenController {
         });
     }
 
+    /**
+     * Disables the ability to select days that are in past
+     */
     public void initDatePicker() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
@@ -101,6 +110,10 @@ public class UserScreenController {
         });
     }
 
+    /**
+     * Adds data to from and to boxes and adds interactivity to them.
+     * When a fromBox selection is made, the contents of toBox will change accordingly.
+     */
     public void initToFromBoxes() {
         toStations = FXCollections.observableArrayList();
         fromStations = FXCollections.observableArrayList();
@@ -114,6 +127,7 @@ public class UserScreenController {
         for (Trip trip : trips) {
             Station to = trip.getConnection().getTo();
             Station from = trip.getConnection().getFrom();
+            //Disallows multiple instances of the same station being inserted
             if (!isStationInList(to, toStations)) toStations.add(to.toString());
             if (!isStationInList(from, fromStations)) fromStations.add(from.toString());
         }
@@ -126,6 +140,7 @@ public class UserScreenController {
             for (Trip trip : trips) {
                 Station to = trip.getConnection().getTo();
                 Station from = trip.getConnection().getFrom();
+                //If there is a connection to a station from current fromBox selection, add it to the list
                 if (!isStationInList(to, newToStations) && from.toString().equals(newValue))
                     newToStations.add(to.toString());
             }
@@ -134,6 +149,9 @@ public class UserScreenController {
         });
     }
 
+    /**
+     * Makes the settings button open up the settings menu
+     */
     public void initSettingsButton() {
         settingsButton.setOnAction(event -> {
             Parent root;
@@ -153,6 +171,10 @@ public class UserScreenController {
         });
     }
 
+    /**
+     * Validates user input and then searches for trips that match the given search criteria.
+     * If trips are found, moves to the display trips screen.
+     */
     public void initSearchButton() {
         searchButton.setOnAction(event -> {
             if (!validateInput()) return;
@@ -162,7 +184,7 @@ public class UserScreenController {
                 try {
                     Client.session.setFoundTrips(foundTrips);
                     Client.session.setPassengers(amountOfPassengers);
-                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/display_trips_screen.fxml"))));
+                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/payment_screen.fxml"))));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -192,6 +214,9 @@ public class UserScreenController {
         return false;
     }
 
+    /**
+     * Add options to passenger amount box
+     */
     public void populatePassengerAmontBox() {
         passengerAmount = FXCollections.observableArrayList();
         for (int i = 1; i < 11; i++) {
@@ -200,12 +225,19 @@ public class UserScreenController {
         passAmount.setItems(passengerAmount);
     }
 
+    /**
+     * Add options to departure or arrival box
+     */
     public void populateDepOrArr() {
         depOrAr = FXCollections.observableArrayList();
         depOrAr.addAll("Departure", "Arrival");
         departureOrArrival.setItems(depOrAr);
     }
 
+    /**
+     * Validates user input by calling two other validation methods
+     * @return true if input is valid, false otherwise
+     */
     public boolean validateInput() {
 
         if (!areAllFilled()) return false;
@@ -213,6 +245,10 @@ public class UserScreenController {
         return true;
     }
 
+    /**
+     * Checks if all input fields are filled out
+     * @return true if all field filled out, false otherwise
+     */
     public boolean areAllFilled() {
         if (fromBox.getValue() == null || toBox.getValue() == null || passAmount.getValue() == null ||
                 datePicker.getValue() == null || timeBox.getText() == null || departureOrArrival.getValue() == null) {
@@ -227,16 +263,25 @@ public class UserScreenController {
         return true;
     }
 
+    /**
+     * Checks that the given time input is valid
+     * @return true if the time is valid, false otherwise
+     */
     public boolean validateTime() {
 
         boolean valid;
+        //Remove everything that's not a digit
         timeString = timeBox.getText().replaceAll("[^0-9]", "");
+
+        //Check if the string is too small
         if (timeString.length() < 3) {
             valid = false;
         } else {
+            //Add a 0 to the front if the user accidentally gave a three digit time
             if (timeString.length() == 3) {
                 timeString = "0" + timeString;
             }
+            //Format the time string and validate it
             timeString = timeString.substring(0, 2) + ":" + timeString.substring(2, 4);
             if (timeString.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]")) {
                 valid = true;
@@ -256,12 +301,17 @@ public class UserScreenController {
         return valid;
     }
 
+    /**
+     * Searches for trips according to the users search criteria.
+     * @return List of trips that match the criteria
+     */
     public List<Trip> searchForTrips() {
 
         List<Trip> foundTrips = new ArrayList<>();
         boolean departure;
         amountOfPassengers = Integer.parseInt(passAmount.getValue().toString());
 
+        //We need to calculate the times differently if the user selected the arrival option
         if (departureOrArrival.getValue().equals("Departure")) departure = true;
         else departure = false;
 
@@ -271,10 +321,12 @@ public class UserScreenController {
             e.printStackTrace();
         }
 
+        //Parse the LocalDateTime from user input
         LocalTime time = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
         LocalDate date = datePicker.getValue();
         LocalDateTime dateTime = LocalDateTime.of(date, time);
 
+        //Search the list of trips for trips that match the criteria
         for (Trip trip : trips) {
             if (connectionMatchesSelection(trip.getConnection()) && isAfterTime(trip, dateTime, departure) && trip.hasSpace(amountOfPassengers)) {
                 foundTrips.add(trip);
@@ -285,6 +337,11 @@ public class UserScreenController {
         return foundTrips;
     }
 
+    /**
+     * Checks if a connection's stations match the user input
+     * @param connection Connection that's being checked
+     * @return  true if the stations match, false otherwise
+     */
     public boolean connectionMatchesSelection(Connection connection) {
         String from = fromBox.getValue().toString();
         String to = toBox.getValue().toString();
@@ -295,6 +352,13 @@ public class UserScreenController {
         return false;
     }
 
+    /**
+     * Calculates whether a trip's arrival of departure time is after
+     * @param trip Trip that is being observed
+     * @param dateTime  Time that the trip's times are being compared to
+     * @param departure Tells if we're looking at the trip's departure time or arrival time
+     * @return true if the trip's departure or arrival time is after dateTime
+     */
     public boolean isAfterTime(Trip trip, LocalDateTime dateTime, boolean departure) {
         LocalDateTime tripTime = trip.getDepartureTime();
         if (!departure) {

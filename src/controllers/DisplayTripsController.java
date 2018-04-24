@@ -27,9 +27,6 @@ public class DisplayTripsController {
     private TableView<TableData> listOfTrips;
 
     @FXML
-    private TableColumn<TableData, String> actionColumn;
-
-    @FXML
     private TableColumn<TableData, String> depColumn;
 
     @FXML
@@ -48,7 +45,7 @@ public class DisplayTripsController {
     private TableColumn<TableData, String> serviceColumn;
 
     @FXML
-    private Button proceedButton;
+    private TableColumn<TableData, String> actionColumn;
 
     @FXML
     private Button settingsButton;
@@ -62,7 +59,9 @@ public class DisplayTripsController {
     public void initialize() {
 
         data = FXCollections.observableArrayList();
+        //Get the found trips from session
         foundTrips = Client.session.getFoundTrips();
+        //Populate the table and add interactivity
         populateTable(foundTrips);
         initEnterToGo();
         initSettingsButton();
@@ -70,18 +69,25 @@ public class DisplayTripsController {
 
     }
 
+    /**
+     * Populates the Table View with trips from the parameter list.
+     * Uses the trips to construct TableData objects, which are then added to the table.
+     * @param trips List of trips that are used to populate the table
+     */
     public void populateTable(List<Trip> trips) {
+        //Create the TableData objects from trips
         for (Trip trip : trips) {
             data.add(new TableData(trip));
         }
+        //Set cell value factories
         depColumn.setCellValueFactory(new PropertyValueFactory<>("departure"));
         arrColumn.setCellValueFactory(new PropertyValueFactory<>("arrival"));
         lengthColumn.setCellValueFactory(new PropertyValueFactory<>("length"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         serviceColumn.setCellValueFactory(new PropertyValueFactory<>("services"));
-//        actionColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
 
+        //Make the buttons in action column
         Callback<TableColumn<TableData, String>, TableCell<TableData, String>> cellFactory
                 = new Callback<TableColumn<TableData, String>, TableCell<TableData, String>>() {
             @Override
@@ -90,6 +96,7 @@ public class DisplayTripsController {
 
                     final Button btn = new Button("Order");
 
+                    //Add interactivity to the buttons
                     @Override
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
@@ -98,6 +105,7 @@ public class DisplayTripsController {
                             setText(null);
                         } else {
                             btn.setOnAction(e -> {
+                                //Check which button was pressed, add that trip as the selected trip and proceed to the order screen
                                 int index = getIndex();
                                 Client.session.setSelectedTrip(foundTrips.get(index));
                                 try {
@@ -116,11 +124,13 @@ public class DisplayTripsController {
         };
 
         actionColumn.setCellFactory(cellFactory);
-
         listOfTrips.setItems(data);
 
     }
 
+    /**
+     * Makes it so that the enter key can be used to proceed to the order screen instead of clicking the button
+     */
     public void initEnterToGo(){
         listOfTrips.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
@@ -136,14 +146,19 @@ public class DisplayTripsController {
         });
     }
 
+    /**
+     * Adds interactivity to the go back button
+     */
     public void initGoBack() {
         goBackBtn.setOnAction(e -> {
+            //Confirm selection
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Confirm that you want to go back");
             alert.setContentText("Are you sure you want to return to the search screen?");
-
             Optional<ButtonType> result = alert.showAndWait();
+
+            //If okay, go back to user screen
             if (result.get() == ButtonType.OK) {
                 try {
                     controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/user_screen.fxml"))));
@@ -156,6 +171,9 @@ public class DisplayTripsController {
         });
     }
 
+    /**
+     * Make the settings button open up the settings window.
+     */
     public void initSettingsButton() {
         settingsButton.setOnAction(event -> {
             Parent root;
@@ -173,20 +191,5 @@ public class DisplayTripsController {
                 e.printStackTrace();
             }
         });
-    }
-
-    public void initProceedButton() {
-        proceedButton.setOnAction(e -> {
-            Client.session.setSelectedTrip(getRadioSelection());
-            try {
-                controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/order_screen.fxml"))));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-    }
-
-    public Trip getRadioSelection() {
-        return null;
     }
 }

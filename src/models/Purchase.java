@@ -24,8 +24,6 @@ public class Purchase implements Serializable {
         this.buyer = buyer;
     }
 
-    //TODO aseta matkaa, penkkiä tai vaunua vaihdettaessa vanha paikka vapaaksi, uusi varatuksi
-
     public Trip getTrip() {
         return trip;
     }
