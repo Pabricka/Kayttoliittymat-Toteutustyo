@@ -184,7 +184,7 @@ public class UserScreenController {
                 try {
                     Client.session.setFoundTrips(foundTrips);
                     Client.session.setPassengers(amountOfPassengers);
-                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/payment_screen.fxml"))));
+                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/display_trips_screen.fxml"))));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
