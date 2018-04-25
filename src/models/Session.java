@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Session {
@@ -11,6 +12,8 @@ public class Session {
     private List<Integer> selectedCars;
 
     public Session() {
+        selectedSeats = new ArrayList<>();
+        selectedCars = new ArrayList<>();
     }
 
     public User getUser() {
@@ -51,6 +54,13 @@ public class Session {
 
     public void setSelectedSeats(List<Integer> selectedSeats) {
         this.selectedSeats = selectedSeats;
+    }
+    public void addSelectedSeat(int i){
+        if(selectedSeats.size()<passengers)
+        selectedSeats.add(i);
+    }
+    public void addSelectedCar(int i){
+        selectedCars.add(i);
     }
 
     public List<Integer> getSelectedCars() {

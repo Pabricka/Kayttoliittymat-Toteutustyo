@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Seat implements Serializable {
 
     private boolean free;
+    private boolean temporalReservation;
     private boolean forTheAllergic;
     private boolean wheelChairAccess;
     private boolean petAllowed;
@@ -26,11 +27,12 @@ public class Seat implements Serializable {
         this.free = free;
     }
 
-    public void normalizeSeat() {
-        forTheAllergic = false;
-        familyCluster = false;
-        wheelChairAccess = false;
-        petAllowed = false;
+    public boolean isTemporalReservation() {
+        return temporalReservation;
+    }
+
+    public void setTemporalReservation(boolean temporalReservation) {
+        this.temporalReservation = temporalReservation;
     }
 
     public boolean isForTheAllergic() {
