@@ -47,6 +47,11 @@ public class Trip implements Comparable<Trip>, Serializable {
         return (departureTime.compareTo(o.departureTime));
     }
 
+    /**
+     * Checks if there is at least a certain amount of seats available
+     * @param amount The amount of space that is required
+     * @return true if there is enough space, false otherwise
+     */
     public boolean hasSpace(int amount) {
         int free = 0;
         List<Seat> seats;

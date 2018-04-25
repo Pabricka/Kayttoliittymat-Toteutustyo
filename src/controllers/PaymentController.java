@@ -75,8 +75,13 @@ public class PaymentController {
         initEnterToGo();
         initMethodChoiceUpdate();
         initProceedBtn();
+        initCCfields();
     }
 
+    /**
+     * Adds the user's data to the info fields
+     * and populates the choice box options.
+     */
     public void initializeInfoFields() {
 
         methodItems = FXCollections.observableArrayList();
@@ -99,11 +104,13 @@ public class PaymentController {
         }
         providerChoice.setItems(providerItems);
 
+        //Add months
         for (int i = 1; i < 13; i++) {
             exp1Items.add(i);
         }
         expirationBox1.setItems(exp1Items);
 
+        //Add years
         for (int i = 18; i < 26; i++) {
             exp2Items.add(i);
         }
@@ -111,7 +118,27 @@ public class PaymentController {
 
     }
 
-    public void initEnterToGo(){
+    /**
+     * Inits the credit card fields with user's payment information
+     */
+    public void initCCfields() {
+        CreditCard card = Client.currentUser.getCreditCard();
+
+        if (card == null) return;
+
+        methodChoice.getSelectionModel().selectFirst();
+        providerChoice.getSelectionModel().select(card.getProvider().toString());
+        ccNumberText.setText(card.getNumber());
+        cvvText.setText(card.getCVV());
+        expirationBox1.setValue(card.getExpirationDate().getMonthValue());
+        expirationBox2.setValue(card.getExpirationDate().getYear() - 2000);
+
+    }
+
+    /**
+     * Enter can be used to proceed with the purchase
+     */
+    public void initEnterToGo() {
         grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
                 proceedButton.fire();
@@ -120,6 +147,9 @@ public class PaymentController {
         });
     }
 
+    /**
+     * Make the credit card fields uneditable if user selects to pay on the train
+     */
     public void initMethodChoiceUpdate() {
         methodChoice.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Number>) (observableValue, oldValue, newValue) -> {
             if ((Integer) newValue == 1) {
@@ -141,15 +171,24 @@ public class PaymentController {
         });
     }
 
+    /**
+     * Validates user input and proceeds to make the purchase if the input is valid.
+     */
     public void initProceedBtn() {
         proceedButton.setOnAction(e -> {
             errorMsg.setText("");
+
+            //If no payment method is selected
             if (methodChoice.getSelectionModel().getSelectedIndex() == -1) {
                 errorMsg.setText("Select a method of payment!");
                 return;
-            } else if (methodChoice.getSelectionModel().getSelectedIndex() == 0) {
+            }
+            //If credit card was selected as the method
+            else if (methodChoice.getSelectionModel().getSelectedIndex() == 0) {
                 if (!validateContactInput() || !validateCCinput()) return;
-            } else {
+            }
+            //If pay on the train was selected as the method
+            else {
                 if (!validateContactInput()) return;
             }
 //            FOR VALITTU PENKKI IN VALITUT PENKIT
@@ -161,6 +200,7 @@ public class PaymentController {
 //            catch(Exception exc){
 //                exc.printStackTrace();
 //            }
+            //Move to the success screen
             try {
                 controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/success_screen.fxml"))));
             } catch (Exception ex) {
@@ -187,15 +227,24 @@ public class PaymentController {
         return true;
     }
 
+
+    /**
+     * Validate credit card info
+     *
+     * @return true if info is valid, false otherwise
+     */
     public boolean validateCCinput() {
+
         String ccNumber = ccNumberText.getText().replaceAll("[^\\d]", "");
         String cvvNumber = cvvText.getText();
 
         int cvvLength;
 
+        //If provider is American Express, CVV length is 4, otherwise 3
         if (providerChoice.getSelectionModel().getSelectedIndex() == 2) cvvLength = 4;
         else cvvLength = 3;
 
+        //Check if some fields are empty
         if (methodChoice.getSelectionModel().getSelectedIndex() == -1 || providerChoice.getSelectionModel().getSelectedIndex() == -1 ||
                 ccNumberText.getText().length() < 1 || cvvNumber.length() < 1 || expirationBox1.getSelectionModel().getSelectedIndex() == -1 ||
                 expirationBox2.getSelectionModel().getSelectedIndex() == -1) {
@@ -203,26 +252,31 @@ public class PaymentController {
             return false;
         }
 
+        //Get info from input fields
         String providerString = providerChoice.getSelectionModel().getSelectedItem().toString();
         int expMonth = (Integer) expirationBox1.getSelectionModel().getSelectedItem();
         int expYear = 2000 + (Integer) expirationBox2.getSelectionModel().getSelectedItem();
         String expMonthString = expirationBox1.getSelectionModel().getSelectedItem().toString();
 
+        //Add 0 to month if month is a single digit number for formatting reasons
         if (expMonthString.length() == 1) expMonthString = "0" + expMonth;
 
-
+        //Check that credit card number length is 16, CVV length is correct, CVV only has digits and that the expiration date is not in the past
         if (ccNumber.length() != 16 || cvvNumber.length() != cvvLength || !cvvNumber.matches("[0-9]+") ||
                 expYear < Calendar.getInstance().get(Calendar.YEAR) || (expYear == Calendar.getInstance().get(Calendar.YEAR) && expMonth < Calendar.getInstance().get(Calendar.MONTH + 1))) {
             errorMsg.setText("Bad credit card information");
             return false;
         }
+        //Parse YearMonth expiration date for the credit card's contructor
         YearMonth expDate = YearMonth.parse(expMonthString + " " + expYear, DateTimeFormatter.ofPattern("MM yyyy"));
 
+        //If save info is selected, create a new credit card and assign it to the user
         if (savePaymentInfo.isSelected()) {
             CreditCard.Provider provid = CreditCard.Provider.VISA;
             for (CreditCard.Provider provider : CreditCard.Provider.values()) {
                 if (provider.equalsName(providerString)) provid = provider;
             }
+            ccNumber = ccNumber.substring(0, 4) + " " + ccNumber.substring(4, 8) + " " + ccNumber.substring(8, 12) + " " + ccNumber.substring(12, 16);
             Client.currentUser.setCreditCard(new CreditCard(ccNumber, cvvNumber, provid, expDate));
         }
         return true;

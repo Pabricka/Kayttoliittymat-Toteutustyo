@@ -29,6 +29,11 @@ public class TableData {
         this.button = new Button("Order");
     }
 
+    /**
+     * Formats and return a string of the trip's services
+     * @param trip The trip whose services are being checked
+     * @return  A string of services formatted for TableData
+     */
     public String getServiceString(Trip trip) {
         String services = "";
         boolean forTheAllergic = false;
