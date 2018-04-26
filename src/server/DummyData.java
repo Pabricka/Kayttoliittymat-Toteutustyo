@@ -19,4 +19,5 @@ public interface DummyData extends Remote {
     void addCarType(Car car) throws RemoteException;
     ArrayList<Trip> getTrips() throws RemoteException;
     ArrayList<Purchase> getPurchases() throws RemoteException;
+    void newPurchase(Purchase p) throws RemoteException;
 }

@@ -198,6 +198,11 @@ public class Server implements DummyData {
     }
 
     @Override
+    public void newPurchase(Purchase p) throws RemoteException {
+        purchases.add(p);
+    }
+
+    @Override
     public ArrayList<Car> getCarTypes() throws RemoteException {
         return carTypes;
     }

@@ -14,7 +14,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import models.Car;
 import models.CreditCard;
+import models.Purchase;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -191,20 +193,19 @@ public class PaymentController {
             else {
                 if (!validateContactInput()) return;
             }
-//            FOR VALITTU PENKKI IN VALITUT PENKIT
-//            Purchase purchase = new Purchase(Client.currentUser, SELECTED_TRIP, SELECTED_PENKKI, SELECTED_VAUNU);
-//
-//            try{
-//                Client.dummyData.getPurchases().add(purchase);
-//            }
-//            catch(Exception exc){
-//                exc.printStackTrace();
-//            }
-            //Move to the success screen
-            try {
-                controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/success_screen.fxml"))));
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            for(int i =0; i< Client.session.getPassengers(); i++) {
+                Purchase p = new Purchase(Client.currentUser, Client.session.getSelectedTrip(), Client.session.getSelectedCars().get(i), Client.session.getSelectedSeats().get(i));
+                try {
+                    Client.dummyData.newPurchase(p);
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                }
+                //Move to the success screen
+                try {
+                    controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/success_screen.fxml"))));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
         });

@@ -24,6 +24,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pick your seats" GridPane.columnIndex="2" GridPane.halignment="CENTER">
@@ -43,26 +44,27 @@
       </Button>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="3">
          <children>
-            <RadioButton fx:id="allergicRadio" mnemonicParsing="false" text="Seats for the allergic" />
-            <RadioButton fx:id="wheelRadio" mnemonicParsing="false" text="Wheelchair access" />
-            <RadioButton fx:id="petRadio" mnemonicParsing="false" text="Pets allowed" />
-            <RadioButton fx:id="familyRadio" mnemonicParsing="false" text="Family seats" />
+            <RadioButton fx:id="allRadio" mnemonicParsing="false" onAction="#AllRadioSelected" text="All seats" />
+            <RadioButton fx:id="allergicRadio" mnemonicParsing="false" onAction="#AllergicRadioSelected" text="Seats for the allergic" />
+            <RadioButton fx:id="wheelRadio" mnemonicParsing="false" onAction="#WheelchairRadioSelected" text="Wheelchair access" />
+            <RadioButton fx:id="petRadio" mnemonicParsing="false" onAction="#PetRadioSelected" text="Pets allowed" />
+            <RadioButton fx:id="familyRadio" mnemonicParsing="false" onAction="#FamilyRadioSelected" text="Family seats" />
          </children>
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
       </VBox>
-      <Button mnemonicParsing="false" text="Go Back" GridPane.rowIndex="4">
+      <Button mnemonicParsing="false" onAction="#GoBack" text="Go Back" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="Settings" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Button fx:id="settings" mnemonicParsing="false" onAction="#SettingsBtnClicked" text="Settings" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="15.0" top="15.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="proceedBtn" mnemonicParsing="false" text="Proceed to payment" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+      <Button fx:id="proceedBtn" mnemonicParsing="false" onAction="#ProceedToPayment" text="Proceed to payment" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
       <GridPane fx:id="seats_grid" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" />
@@ -79,6 +81,6 @@
             <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#ResetSelectedSeats" text="Reset selected seats" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Button mnemonicParsing="false" onAction="#ResetSelectedSeats" text="Reset selected seats" GridPane.columnIndex="3" GridPane.rowIndex="5" />
    </children>
 </GridPane>

@@ -61,10 +61,10 @@ public class CarPreviewController {
         familyImage = new Image("res/family.png");
 
         this.car = new Car("new type", 20, true, true, false, true);
-        drawCar(seat_grid, car, true);
+        drawCar(seat_grid, car, true, true,true,true,true);
     }
 
-    static void drawCar(GridPane grid, Car car, boolean previewOnly) {
+    static void drawCar(GridPane grid, Car car, boolean previewOnly, boolean allergic, boolean wheelchair, boolean pets, boolean family) {
 
 
 
@@ -88,14 +88,30 @@ public class CarPreviewController {
             if(s.isFree()) {
                 if (s.isFamilyCluster()) {
                     btn.setGraphic(new ImageView(familyImage));
+                    if(!family){
+                        btn.setDisable(true);
+                    }
                 } else if (s.isForTheAllergic()) {
                     btn.setGraphic(new ImageView(allergicImage));
+                    if(!allergic){
+                        btn.setDisable(true);
+                    }
                 } else if (s.isWheelChairAccess()) {
                     btn.setGraphic(new ImageView(wheelchairImage));
+                    if(!wheelchair){
+                        btn.setDisable(true);
+                    }
                 } else if (s.isPetAllowed()) {
                     btn.setGraphic(new ImageView(petImage));
+                    if(!pets){
+                        btn.setDisable(true);
+                    }
                 } else {
                     btn.setGraphic(new ImageView(seatImage));
+                    if(!allergic||!family||!pets||!wheelchair){
+                        btn.setDisable(true);
+
+                    }
                 }
                 if(s.isTemporalReservation()){
                     btn.setGraphic(new ImageView(selected));
@@ -104,6 +120,7 @@ public class CarPreviewController {
             }
             else {
                 btn.setGraphic(new ImageView(reservedImage));
+                btn.setDisable(true);
             }
             if (previewOnly) {
                 btn.setDisable(true);
@@ -121,9 +138,6 @@ public class CarPreviewController {
                             btn.setDisable(true);
                         }
                     });
-                }
-                else {
-                    btn.setDisable(true);
                 }
                 id++;
             }
@@ -144,13 +158,13 @@ public class CarPreviewController {
 
     public void familyClusterSelected() {
         car.setFamilyCluster(family_cluster_box.isSelected());
-        drawCar(seat_grid, car, true);
+        drawCar(seat_grid, car, true,true,true,true,true);
 
     }
 
     public void wheelChairSelected() {
         car.setWheelChairAccess(wheelchair_box.isSelected());
-        drawCar(seat_grid, car, true);
+        drawCar(seat_grid, car, true,true,true,true,true);
 
     }
 
@@ -160,7 +174,7 @@ public class CarPreviewController {
             car.setPetAllowed(false);
         }
         car.setForTheAllergic(allergy_box.isSelected());
-        drawCar(seat_grid, car, true);
+        drawCar(seat_grid, car, true,true,true,true,true);
 
     }
 
@@ -170,7 +184,7 @@ public class CarPreviewController {
             car.setForTheAllergic(false);
         }
         car.setPetAllowed(pets_box.isSelected());
-        drawCar(seat_grid, car, true);
+        drawCar(seat_grid, car, true,true,true,true,true);
 
     }
 
@@ -200,6 +214,6 @@ public class CarPreviewController {
 
     public void applyClicked(){
         car.setSeatAmount((int)seat_slider.getValue());
-        drawCar(seat_grid,car,true);
+        drawCar(seat_grid, car, true,true,true,true,true);
     }
 }
