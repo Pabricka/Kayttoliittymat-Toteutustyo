@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Train implements Serializable {
     private String engine;
-    private int seats;
+
     private List<Car> cars;
 
     public Train(String engine, List<Car> cars) {
@@ -36,9 +36,41 @@ public class Train implements Serializable {
         }
         return tmp;
     }
-
-    public void setSeats(int seats) {
-        this.seats = seats;
+    public int getAllergicSeats(){
+        int tmp =0;
+        for (Car car : cars){
+            if(car.isForTheAllergic()){
+                tmp += 2;
+            }
+        }
+        return tmp;
+    }
+    public int getFamilySeats(){
+        int tmp =0;
+        for (Car car : cars){
+            if(car.isFamilyCluster()){
+                tmp += 4;
+            }
+        }
+        return tmp;
+    }
+    public int getPetSeats(){
+        int tmp =0;
+        for (Car car : cars){
+            if(car.isPetAllowed()){
+                tmp += 2;
+            }
+        }
+        return tmp;
+    }
+    public int getWheelchairSeats(){
+        int tmp =0;
+        for (Car car : cars){
+            if(car.isWheelChairAccess()){
+                tmp += 2;
+            }
+        }
+        return tmp;
     }
 
     public List<Car> getCars() {
@@ -52,5 +84,6 @@ public class Train implements Serializable {
     public void addCar(Car car) {
         cars.add(new Car(car.getName(), car.getSeatAmount(), car.isForTheAllergic(), car.isWheelChairAccess(), car.isPetAllowed(), car.isFamilyCluster()));
     }
+
 }
 

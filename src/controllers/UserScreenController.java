@@ -315,7 +315,7 @@ public class UserScreenController {
         else departure = false;
 
         try {
-            List<Trip> trips = dummyData.getTrips();
+            trips = dummyData.getTrips();
         } catch (Exception e) {
             e.printStackTrace();
         }

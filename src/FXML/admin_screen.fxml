@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
     <children>
         <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="829.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -203,7 +203,7 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <Text fx:id="wheelcair_seats" strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="6" GridPane.valignment="TOP">
+                        <Text fx:id="wheelchair_seats" strokeType="OUTSIDE" strokeWidth="0.0" text="0" GridPane.columnIndex="7" GridPane.rowIndex="6" GridPane.valignment="TOP">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -227,7 +227,7 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <Button fx:id="editEngine" mnemonicParsing="false" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                        <Button fx:id="editEngine" mnemonicParsing="false" onAction="#editEngineButtonClicked" text="Edit" GridPane.columnIndex="8" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -235,10 +235,10 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="remove_car" mnemonicParsing="false" text="Remove" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-                        <Button fx:id="edit_car" mnemonicParsing="false" text="Edit" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                        <Button fx:id="add_car" mnemonicParsing="false" text="Add" GridPane.columnIndex="4" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                        <Button fx:id="remove_car" mnemonicParsing="false" onAction="#removeCarButtonClicked" text="Remove" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+                        <Button fx:id="add_car" mnemonicParsing="false" onAction="#addCarButtonClicked" text="Add" GridPane.columnIndex="4" GridPane.rowIndex="11" GridPane.valignment="TOP" />
                         <ChoiceBox fx:id="carTypes_box" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="11" GridPane.valignment="TOP" />
+                        <TextField fx:id="engine_field" visible="false" GridPane.columnIndex="7" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                </content>

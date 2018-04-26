@@ -1,6 +1,5 @@
 package controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -8,7 +7,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -18,11 +16,6 @@ import models.Seat;
 
 public class CarPreviewController {
 
-    private Image seatImage;
-    private Image allergicImage;
-    private Image wheelchairImage;
-    private Image petImage;
-    private Image familyImage;
 
     private Car car;
 
@@ -54,11 +47,6 @@ public class CarPreviewController {
         error_msg.setText("");
 
 
-        seatImage = new Image("res/seat.png");
-        allergicImage = new Image("res/allergy.png");
-        wheelchairImage = new Image("res/wheelchair.png");
-        petImage = new Image("res/pet.png");
-        familyImage = new Image("res/family.png");
 
         this.car = new Car("new type", 20, true, true, false, true);
         drawCar(seat_grid, car, true, true,true,true,true);
@@ -199,7 +187,7 @@ public class CarPreviewController {
         try {
             Client.dummyData.addCarType(car);
             AdminController.carTypes = Client.dummyData.getCarTypes();
-            AdminController.carTypes_list.add(car.getName());
+            AdminController.carTypes_list.add(AdminController.carTypes_list.size()-1,car.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }

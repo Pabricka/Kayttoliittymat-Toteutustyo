@@ -20,4 +20,6 @@ public interface DummyData extends Remote {
     ArrayList<Trip> getTrips() throws RemoteException;
     ArrayList<Purchase> getPurchases() throws RemoteException;
     void newPurchase(Purchase p) throws RemoteException;
+    ArrayList<Train> getTrains()throws RemoteException;
+    void setTrain(int index,Train train)throws RemoteException;
 }

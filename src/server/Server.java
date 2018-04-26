@@ -211,4 +211,17 @@ public class Server implements DummyData {
     public void addCarType(Car car) throws RemoteException {
         carTypes.add(car);
     }
+    @Override
+    public ArrayList<Train> getTrains() throws RemoteException{
+        return trains;
+    }
+    @Override
+    public void setTrain(int index,Train train)throws RemoteException{
+        for(Trip t : trips){
+            if(t.getTrain().equals(trains.get(index))){
+                t.setTrain(train);
+            }
+        }
+        trains.set(index,train);
+    }
 }
