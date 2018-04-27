@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 
-public class CreditCard {
+public class CreditCard implements Serializable{
 
     public enum Provider {
         VISA("Visa"),
@@ -11,7 +12,7 @@ public class CreditCard {
 
         private final String name;
 
-        private Provider(String s) {
+        Provider(String s) {
             name = s;
         }
 

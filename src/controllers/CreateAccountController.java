@@ -44,6 +44,9 @@ public class CreateAccountController {
         });
     }
 
+    /**
+     * Checks that the users input is OK, and if so creates a new account to the database
+     */
     public void Create_account_button2Clicked(){
 
 

@@ -84,7 +84,7 @@ public class PaymentController {
      * Adds the user's data to the info fields
      * and populates the choice box options.
      */
-    public void initializeInfoFields() {
+    private void initializeInfoFields() {
 
         methodItems = FXCollections.observableArrayList();
         providerItems = FXCollections.observableArrayList();
@@ -123,7 +123,7 @@ public class PaymentController {
     /**
      * Inits the credit card fields with user's payment information
      */
-    public void initCCfields() {
+    private void initCCfields() {
         CreditCard card = Client.currentUser.getCreditCard();
 
         if (card == null) return;
@@ -140,7 +140,7 @@ public class PaymentController {
     /**
      * Enter can be used to proceed with the purchase
      */
-    public void initEnterToGo() {
+    private void initEnterToGo() {
         grid.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
                 proceedButton.fire();
@@ -152,8 +152,8 @@ public class PaymentController {
     /**
      * Make the credit card fields uneditable if user selects to pay on the train
      */
-    public void initMethodChoiceUpdate() {
-        methodChoice.getSelectionModel().selectedIndexProperty().addListener((ChangeListener<Number>) (observableValue, oldValue, newValue) -> {
+    private void initMethodChoiceUpdate() {
+        methodChoice.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldValue, newValue) -> {
             if ((Integer) newValue == 1) {
                 providerChoice.setDisable(true);
                 ccNumberText.setDisable(true);
@@ -176,7 +176,7 @@ public class PaymentController {
     /**
      * Validates user input and proceeds to make the purchase if the input is valid.
      */
-    public void initProceedBtn() {
+    private void initProceedBtn() {
         proceedButton.setOnAction(e -> {
             errorMsg.setText("");
 
@@ -211,7 +211,7 @@ public class PaymentController {
         });
     }
 
-    public boolean validateContactInput() {
+    private boolean validateContactInput() {
         String fname = fnameText.getText();
         String lname = lnameText.getText();
         String address = addressTxt.getText();
@@ -234,7 +234,7 @@ public class PaymentController {
      *
      * @return true if info is valid, false otherwise
      */
-    public boolean validateCCinput() {
+    private boolean validateCCinput() {
 
         String ccNumber = ccNumberText.getText().replaceAll("[^\\d]", "");
         String cvvNumber = cvvText.getText();

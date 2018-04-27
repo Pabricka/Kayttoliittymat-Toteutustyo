@@ -7,6 +7,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * Necessary interface to make server work
+ */
 public interface DummyData extends Remote {
 
     void createNewUser(String name, String address, String username, String password, Boolean admin) throws RemoteException;

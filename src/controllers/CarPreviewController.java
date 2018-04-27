@@ -52,11 +52,20 @@ public class CarPreviewController {
         drawCar(seat_grid, car, true, true,true,true,true);
     }
 
+    /**
+     * Draws a car as buttons with selected features to a GridPane
+     * @param grid GridPane where seats are drawn
+     * @param car to be drawn
+     * @param previewOnly to disable or not to disable all buttons
+     * @param allergic disable seats for the allergic or not
+     * @param wheelchair disable seats with wheelchair access or not
+     * @param pets disable pet seats or not
+     * @param family disable family clusters or not
+     */
     static void drawCar(GridPane grid, Car car, boolean previewOnly, boolean allergic, boolean wheelchair, boolean pets, boolean family) {
 
 
-
-
+        //images to be used in buttons
         Image seatImage = new Image("res/seat.png");
         Image allergicImage = new Image("res/allergy.png");
         Image wheelchairImage = new Image("res/wheelchair.png");
@@ -66,11 +75,13 @@ public class CarPreviewController {
         Image selected = new Image("res/selected.png");
 
 
+        //clear the grid before drawin
         grid.getChildren().clear();
         int row = 0;
         int column = 0;
         int id = 0;
 
+        //generate a button with correct image for every seat
         for (Seat s : car.getSeats()) {
             Button btn = new Button();
             if(s.isFree()) {
@@ -144,18 +155,26 @@ public class CarPreviewController {
 
     }
 
+    /**
+     * adds family seats
+     */
     public void familyClusterSelected() {
         car.setFamilyCluster(family_cluster_box.isSelected());
         drawCar(seat_grid, car, true,true,true,true,true);
 
     }
-
+    /**
+     * adds seats with wheelchair access
+     */
     public void wheelChairSelected() {
         car.setWheelChairAccess(wheelchair_box.isSelected());
         drawCar(seat_grid, car, true,true,true,true,true);
 
     }
 
+    /**
+     * adds allergy friendly seats
+     */
     public void allergySelected() {
         if (allergy_box.isSelected()) {
             pets_box.setSelected(false);
@@ -166,6 +185,9 @@ public class CarPreviewController {
 
     }
 
+    /**
+     * adds pet seats
+     */
     public void petsSelected() {
         if (pets_box.isSelected()) {
             allergy_box.setSelected(false);
@@ -176,6 +198,10 @@ public class CarPreviewController {
 
     }
 
+    /**
+     * checks that the name is OK, and if so adds the new car type to the database
+     * before closing the window
+     */
     public void okPressed() {
         String tmp = name_field.getText();
         if(tmp.length()==0 ||tmp.length()>15){
@@ -195,11 +221,18 @@ public class CarPreviewController {
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * goes back without doing anything
+     */
     public void cancelPressed(){
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * checks the value of seat slider and updates the preview car
+     */
     public void applyClicked(){
         car.setSeatAmount((int)seat_slider.getValue());
         drawCar(seat_grid, car, true,true,true,true,true);

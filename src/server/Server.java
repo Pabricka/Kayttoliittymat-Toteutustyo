@@ -33,7 +33,12 @@ public class Server implements DummyData {
         carTypes = new ArrayList<>();
         stations = Station.values();
 
+        //create the dummydata
         initializeDummyData();
+
+        /**
+         * open the RMI server and listen to port 1099
+         */
         try {
             Server obj = new Server();
             DummyData stub = (DummyData) UnicastRemoteObject.exportObject(obj, 1);
@@ -52,13 +57,25 @@ public class Server implements DummyData {
         }
     }
 
+    /**
+     * adds a new user to the database
+     * @param name users name
+     * @param address users address
+     * @param username users username
+     * @param password users password
+     * @param admin boolean if user is admin or not
+     */
     @Override
     public void createNewUser(String name, String address, String username, String password, Boolean admin) {
         users.add(new User(name, address, username, password, admin));
 
     }
 
+    /**
+     * creates some pre-set and random generated dummydata
+     */
     private static void initializeDummyData() {
+        //some users
         users.add(new User("Juha Mieto", "1539 Long Street", "Mämmi666", "1234", false));
         users.add(new User("Jari Mentula", "120 Highland Drive", "Bull", "maitorahka", true));
         users.add(new User("Alvin J", "1196 Northwest Boulevard", "Ellis", "dolor", false));
@@ -96,6 +113,7 @@ public class Server implements DummyData {
 
 
 
+        //some connections
         connections.add(new Connection(Station.HELSINKI, Station.TURKU, 20, LocalTime.parse("01:57")));
         connections.add(new Connection(Station.TURKU, Station.TAMPERE, 22, LocalTime.parse("01:47")));
         connections.add(new Connection(Station.SEINÄJOKI, Station.VAASA, 18, LocalTime.parse("00:47")));
@@ -111,6 +129,7 @@ public class Server implements DummyData {
         connectionTimes.add(LocalTime.parse("20:00"));
 
 
+        //some trips
         int tmpTrainCounter = 0;
         for (Connection connection : connections) {
             connection.setTimes(connectionTimes);
@@ -123,6 +142,7 @@ public class Server implements DummyData {
                 }
             }
         }
+        //populate trips with purchases
         for (Trip trip : trips) {
             for (int i = 0; i <= rnd.nextInt(trip.getTrain().getSeats()); i++) {
 
@@ -140,11 +160,22 @@ public class Server implements DummyData {
 
     }
 
+    /**
+     * give client the current users
+     * @return all users in database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<User> getUsers() throws RemoteException {
         return users;
     }
 
+    /**
+     * changes a certain users name
+     * @param username is used as an id
+     * @param s users new name
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void changeName(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s name to " + s);
@@ -157,6 +188,12 @@ public class Server implements DummyData {
 
     }
 
+    /**
+     * changes a certain users username
+     * @param username used as an id
+     * @param s users new username
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void changeUsername(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "'s username to " + s);
@@ -168,6 +205,12 @@ public class Server implements DummyData {
         }
     }
 
+    /**
+     * changes a certain users password
+     * @param username used as an id
+     * @param s users new password
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void changePassword(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s password to " + s);
@@ -179,6 +222,12 @@ public class Server implements DummyData {
         }
     }
 
+    /**
+     * changes a certain users address
+     * @param username used as an id
+     * @param s users new address
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void changeAddress(String username, String s) throws RemoteException {
         System.out.println("Changing " + username + "s address to " + s);
@@ -190,34 +239,68 @@ public class Server implements DummyData {
         }
     }
 
+    /**
+     * @return all the trips in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<Trip> getTrips() throws RemoteException {
         return trips;
     }
 
+    /**
+     * @return all purchases in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<Purchase> getPurchases() throws RemoteException {
         return purchases;
     }
 
+    /**
+     * adds a new purchase to the database
+     * @param p purchase to be added
+     * @throws RemoteException  might occur from communication problems
+     */
     @Override
     public void newPurchase(Purchase p) throws RemoteException {
         purchases.add(p);
     }
 
+    /**
+     * @return all car types in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<Car> getCarTypes() throws RemoteException {
         return carTypes;
     }
 
+    /**
+     * adds a new car to the database
+     * @param car to be added
+     * @throws RemoteException  might occur from communication problems
+     */
     @Override
     public void addCarType(Car car) throws RemoteException {
         carTypes.add(car);
     }
+
+    /**
+     * @return all trains in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<Train> getTrains() throws RemoteException{
         return trains;
     }
+
+    /**
+     * updates a certain train
+     * @param index of a train
+     * @param train updated train
+     * @throws RemoteException  might occur from communication problems
+     */
     @Override
     public void setTrain(int index,Train train)throws RemoteException{
         for(Trip t : trips){
@@ -227,10 +310,20 @@ public class Server implements DummyData {
         }
         trains.set(index,train);
     }
+
+    /**
+     * @return all stations in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public Station[] getStations()throws RemoteException {
         return stations;
     }
+
+    /**
+     * @return all connection in the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public ArrayList<Connection> getConnections() throws RemoteException{
         return connections;

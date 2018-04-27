@@ -2,7 +2,6 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -108,6 +107,9 @@ public class OrderController {
         allRadio.fire();
     }
 
+    /**
+     * Checks that the user has selected seats for every passenger, and if so, proceeds to payment screen
+     */
     public void ProceedToPayment(){
         if(Client.session.getPassengers() == Client.session.getSelectedSeats().size()){
             try{
@@ -126,6 +128,9 @@ public class OrderController {
         }
     }
 
+    /**
+     * Resets the selected seats and redraw car
+     */
     public void ResetSelectedSeats(){
 
         //clear temporal reservations
@@ -147,6 +152,9 @@ public class OrderController {
     }
 
 
+    /**
+     * Return to trips screen
+     */
     public void GoBack(){
 
         //Confirm selection
@@ -168,6 +176,9 @@ public class OrderController {
         }
     }
 
+    /**
+     * Opens settings screen
+     */
     public void SettingsBtnClicked(){
         Parent root;
         try {
@@ -184,6 +195,9 @@ public class OrderController {
     }
 
 
+    /**
+     * Selecting this will allow every free seat to be selected
+     */
     public void AllRadioSelected(){
         CarPreviewController.drawCar(seats_grid, cars.get(car), false, true, true, true, true);
     }

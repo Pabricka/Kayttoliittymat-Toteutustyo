@@ -43,12 +43,19 @@ public class LoginController {
         });
     }
 
+    /**
+     * Create Account -button opens the appropriate screen
+     */
     public void Create_account_buttonClicked() throws IOException {
         info_text.setText("Account created!" + System.getProperty("line.separator") + "You can now log in.");
 
         controllers.Client.stage.setScene(controllers.Client.createAccountScreen);
     }
 
+    /**
+     * Checks that the users input is OK, and if credentials match with the ones found in database,
+     * the user will log in to their appropriate screens (admin or normal user)
+     */
     public void Login_buttonClicked() {
 
 
