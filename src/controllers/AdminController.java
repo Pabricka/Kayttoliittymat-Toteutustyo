@@ -28,13 +28,17 @@ public class AdminController {
 
     static private List<User> users;
     static private List<Purchase> journeys;
-    static List<Car> carTypes;
-    static  private List<Train> trains;
-    static  private List<Car> cars;
+    static  List<Car> carTypes;
+    static private List<Train> trains;
+    static private List<Car> cars;
+    static private List<Connection> connections;
+    static private Station[] stations;
 
     private int selectedTrain;
     private int selectedCar;
     private int selectedCarType;
+    private static int selectedStation;
+    private int selectedConnection;
 
     @FXML
     ListView<String> user_list;
@@ -44,6 +48,10 @@ public class AdminController {
     ListView<String> trains_list;
     @FXML
     ListView<String> cars_list;
+    @FXML
+    ListView<String> stations_list;
+    @FXML
+    ListView<String> connections_list;
 
 
     @FXML
@@ -129,6 +137,16 @@ public class AdminController {
     @FXML
     TextField engine_field;
 
+    @FXML
+    Text station_text;
+
+    @FXML
+    Button add_connection;
+    @FXML
+    Button remove_connection;
+    @FXML
+    ChoiceBox<String> station_box;
+
     private ObservableList<String> toStations = FXCollections.observableArrayList();
     private ObservableList<String> fromStations = FXCollections.observableArrayList();
 
@@ -142,6 +160,10 @@ public class AdminController {
 
     static ObservableList<String> items = FXCollections.observableArrayList();
     private static ObservableList<String>  journey_items = FXCollections.observableArrayList();
+
+    static ObservableList<String> station_items = FXCollections.observableArrayList();
+    static ObservableList<String> connection_items = FXCollections.observableArrayList();
+    static ObservableList<String> connection_box_items = FXCollections.observableArrayList();
 
 
 
@@ -157,8 +179,6 @@ public class AdminController {
                 setDisable(empty || date.compareTo(today) < 0);
             }
         });
-        toStations = FXCollections.observableArrayList();
-        fromStations = FXCollections.observableArrayList();
 
 
         sort_box.getItems().removeAll(sort_box.getItems());
@@ -203,11 +223,28 @@ public class AdminController {
         for(Train train : trains){
             train_items.add(train.getEngine());
         }
+        for(Station station:stations){
+            station_items.add(station.toString());
+        }
 
 
-
+        trains_list.setItems(train_items);
         user_list.setItems(items);
         journey_list.setItems(journey_items);
+        stations_list.setItems(station_items);
+        stations_list.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)-> {
+            selectedStation = stations_list.getSelectionModel().getSelectedIndex();
+            station_text.setText(stations[selectedStation].toString());
+            connection_items.clear();
+            for(Connection connection : connections){
+                if(connection.getFrom().equals(stations[selectedStation])){
+                    connection_items.add(connection.getTo().toString());
+                }
+            }
+            connections_list.setItems(connection_items);
+
+
+        });
 
 
         trains_list.setItems(train_items);
@@ -506,10 +543,20 @@ public class AdminController {
             journeys = Client.dummyData.getPurchases();
             carTypes = Client.dummyData.getCarTypes();
             trains= Client.dummyData.getTrains();
+            stations=Client.dummyData.getStations();
+            connections = Client.dummyData.getConnections();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    public void addConnectionClicked(){
+
+
+
+    }
+    public static int getSelectedStation(){
+        return selectedStation;
     }
 
 

@@ -20,6 +20,7 @@ public class Server implements DummyData {
     private static ArrayList<Train> trains;
     private static ArrayList<Trip> trips;
     private static ArrayList<Purchase> purchases;
+    private static Station[] stations;
 
     public static void main(String args[]) {
 
@@ -30,6 +31,7 @@ public class Server implements DummyData {
         trips = new ArrayList<>();
         connections = new ArrayList<>();
         carTypes = new ArrayList<>();
+        stations = Station.values();
 
         initializeDummyData();
         try {
@@ -91,6 +93,7 @@ public class Server implements DummyData {
                 train.addCar(carTypes.get(rnd.nextInt(carTypes.size())));
             }
         }
+
 
 
         connections.add(new Connection(Station.HELSINKI, Station.TURKU, 20, LocalTime.parse("01:57")));
@@ -223,5 +226,13 @@ public class Server implements DummyData {
             }
         }
         trains.set(index,train);
+    }
+    @Override
+    public Station[] getStations()throws RemoteException {
+        return stations;
+    }
+    @Override
+    public ArrayList<Connection> getConnections() throws RemoteException{
+        return connections;
     }
 }

@@ -243,7 +243,51 @@
                   </GridPane>
                </content>
                 </Tab>
-                <Tab closable="false" onSelectionChanged="#onTabChange" text="Route" />
+                <Tab closable="false" onSelectionChanged="#onTabChange" text="Route">
+               <content>
+                  <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="256.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="0.0" prefWidth="47.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="216.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="4.0" prefWidth="4.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="114.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="216.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="145.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ListView fx:id="stations_list" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+                        <Label text="Stations" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Routes" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="connections_list" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+                        <Button fx:id="add_connection" mnemonicParsing="false" onAction="#addConnectionClicked" prefHeight="25.0" prefWidth="61.0" text="Add" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                        <Button fx:id="remove_connection" mnemonicParsing="false" text="Remove" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+                        <Label text="Connections from:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Text fx:id="station_text" strokeType="OUTSIDE" strokeWidth="0.0" text="TEXT" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="station_box" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                     </children>
+                  </GridPane>
+               </content></Tab>
                 <Tab closable="false" onSelectionChanged="#onTabChange" text="Journey">
                     <content>
                         <GridPane fx:id="journey_pane">
