@@ -10,10 +10,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConnectionController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../res/MyStyle.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ConnectionController">
    <children>
       <GridPane layoutX="1.0" layoutY="7.0" prefHeight="393.0" prefWidth="600.0">
         <columnConstraints>
@@ -30,7 +28,9 @@
             <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="197.0" minHeight="0.0" prefHeight="11.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="144.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="143.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -45,12 +45,20 @@
             <Label text="Destination" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label prefWidth="106.0" text="Departures (hh:mm)" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label text="Length (hh:mm)" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <ListView fx:id="departures_list" prefHeight="105.0" prefWidth="171.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Button fx:id="add_button" mnemonicParsing="false" text="add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-            <Button fx:id="cancel_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="68.0" text="cancel" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-            <Button fx:id="confirm_button" mnemonicParsing="false" prefHeight="48.0" prefWidth="75.0" text="Confirm" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <Label fx:id="check_label" text="Check time!" textFill="RED" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <Text fx:id="error_text" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+            <ListView fx:id="departures_list" prefHeight="105.0" prefWidth="171.0" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.valignment="TOP" />
+            <Button fx:id="add_button" mnemonicParsing="false" onAction="#addClicked" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="48.0" prefWidth="75.0" text="Cancel" GridPane.columnIndex="5" GridPane.rowIndex="7">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="confirm_button" mnemonicParsing="false" onAction="#confirmClicked" prefHeight="48.0" prefWidth="75.0" text="Confirm" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Label fx:id="check_label" text="Check time!" textFill="RED" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Label fx:id="error_label" prefHeight="70.0" prefWidth="167.0" text="Have you filled out all fields?" textFill="RED" visible="false" GridPane.columnIndex="5" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+            <TextField fx:id="price_field" GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label text="Price (no decimals)" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

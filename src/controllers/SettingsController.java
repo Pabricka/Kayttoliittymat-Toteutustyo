@@ -146,7 +146,7 @@ public class SettingsController {
             //Display an error message if the user has no saved payment data
             if (Client.currentUser.getCreditCard() == null) {
                 paymentInfoText.setFill(Color.RED);
-                paymentInfoText.setText("There if no info to remove!");
+                paymentInfoText.setText("There is no info to remove!");
                 return;
             }
             //If the user has saved data, set the user's credit card to null

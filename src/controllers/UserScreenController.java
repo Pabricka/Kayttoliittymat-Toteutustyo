@@ -206,7 +206,7 @@ public class UserScreenController {
      * @param stations list of stations
      * @return true if station in stations, false otherwise
      */
-    public boolean isStationInList(Station station, List<String> stations) {
+    public static boolean isStationInList(Station station, List<String> stations) {
         for (String s : stations) {
             if (station.toString().equals(s)) return true;
         }

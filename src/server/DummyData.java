@@ -27,4 +27,7 @@ public interface DummyData extends Remote {
     void setTrain(int index,Train train)throws RemoteException;
     Station[] getStations()throws RemoteException;
     ArrayList<Connection> getConnections() throws RemoteException;
+    void addConnection(Connection connection) throws RemoteException;
+    void removeConnection(int i) throws RemoteException;
+    void removeJourney(int i)throws RemoteException;
 }

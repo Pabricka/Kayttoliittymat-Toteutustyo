@@ -1,25 +1,19 @@
 package controllers;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -31,13 +25,15 @@ public class AdminController {
     static  List<Car> carTypes;
     static private List<Train> trains;
     static private List<Car> cars;
-    static private List<Connection> connections;
+    static private ArrayList<Connection> connections;
     static private Station[] stations;
 
     private int selectedTrain;
     private int selectedCar;
     private int selectedCarType;
     private static int selectedStation;
+    private int selectedUser;
+    private int selectedJourney;
     private int selectedConnection;
 
     @FXML
@@ -62,29 +58,26 @@ public class AdminController {
 
     @FXML
     Text password_text;
+    @FXML
+    Text address_text;
 
     @FXML
-    Text u_text;
+    Button edit_username_button;
+    @FXML
+    Button edit_name_button;
+    @FXML
+    Button edit_password_button;
+    @FXML
+    Button edit_address_button;
 
     @FXML
-    Text n_text;
-
+    TextField username_field;
     @FXML
-    Text p_text;
-
+    TextField name_field;
     @FXML
-    Button u_button;
+    TextField password_field;
     @FXML
-    Button n_button;
-    @FXML
-    Button p_button;
-
-    @FXML
-    TextField u_field;
-    @FXML
-    TextField n_field;
-    @FXML
-    TextField p_field;
+    TextField address_field;
 
     @FXML
     ComboBox<String> sort_box;
@@ -99,18 +92,11 @@ public class AdminController {
     Text from_text;
     @FXML
     Text to_text;
-    @FXML
-    ChoiceBox from_choice;
-    @FXML
-    ChoiceBox to_choice;
-    @FXML
-    Button edit_connection;
+
     @FXML
     Text date_text;
-    @FXML
-    DatePicker pick_date;
-    @FXML
-    Button edit_date;
+
+
     @FXML
     Label date_label;
 
@@ -145,10 +131,16 @@ public class AdminController {
     @FXML
     Button remove_connection;
     @FXML
-    ChoiceBox<String> station_box;
+    Button delete_journey;
+    @FXML
+    Text train_capacity;
+    @FXML
+    Text engine_text;
+    @FXML
+    Text time_text;
+    @FXML
+    Button userview_button;
 
-    private ObservableList<String> toStations = FXCollections.observableArrayList();
-    private ObservableList<String> fromStations = FXCollections.observableArrayList();
 
 
 
@@ -163,22 +155,13 @@ public class AdminController {
 
     static ObservableList<String> station_items = FXCollections.observableArrayList();
     static ObservableList<String> connection_items = FXCollections.observableArrayList();
-    static ObservableList<String> connection_box_items = FXCollections.observableArrayList();
 
 
 
     @FXML
     public void initialize () {
         selectedTrain = -1;
-
-        pick_date.setDayCellFactory(picker -> new DateCell() {
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-
-                setDisable(empty || date.compareTo(today) < 0);
-            }
-        });
+        selectedUser = -1;
 
 
         sort_box.getItems().removeAll(sort_box.getItems());
@@ -271,35 +254,30 @@ public class AdminController {
 
 
         user_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    u_text.setText("Username: ");
-                    n_text.setText("Name: ");
-                    p_text.setText("Password: ");
-                    username_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername());
-                    name_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getName());
-                    password_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getPassword());
-                    u_button.setVisible(true);
-                    n_button.setVisible(true);
-                    p_button.setVisible(true);
+            selectedUser = user_list.getSelectionModel().getSelectedIndex();
+                    username_text.setText(users.get(selectedUser).getUsername());
+                    name_text.setText(users.get(selectedUser).getName());
+                    password_text.setText(users.get(selectedUser).getPassword());
+                    address_text.setText(users.get(selectedUser).getAddress());
+                    edit_username_button.setVisible(true);
+                    edit_name_button.setVisible(true);
+                    edit_password_button.setVisible(true);
+                    edit_address_button.setVisible(true);
 
                 }
         );
         journey_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            from_label.setVisible(true);
-            to_label.setVisible(true);
-            date_label.setVisible(true);
-            edit_connection.setVisible(true);
-            edit_date.setVisible(true);
-            from_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getConnection().getFrom().toString());
-            to_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getConnection().getTo().toString());
-            date_text.setText(journeys.get(journey_list.getSelectionModel().getSelectedIndex()).getTrip().getDepartureTime().toLocalDate().toString());
-        });
-        for (Purchase journey : journeys) {
-            Station to = journey.getTrip().getConnection().getTo();
-            Station from = journey.getTrip().getConnection().getFrom();
-            if (!isStationInList(to, toStations)) toStations.add(to.toString());
-            if (!isStationInList(from, fromStations)) fromStations.add(from.toString());
+            selectedJourney = journey_list.getSelectionModel().getSelectedIndex();
+            delete_journey.setVisible(true);
+            from_text.setText(journeys.get(selectedJourney).getTrip().getConnection().getFrom().toString());
+            to_text.setText(journeys.get(selectedJourney).getTrip().getConnection().getTo().toString());
+            date_text.setText(journeys.get(selectedJourney).getTrip().getDepartureTime().toLocalDate().toString());
+            train_capacity.setText(calculateSeats());
+            time_text.setText(journeys.get(selectedJourney).getTrip().getDepartureTime().toLocalTime().toString());
+            engine_text.setText(journeys.get(selectedJourney).getTrip().getTrain().getEngine());
 
-        }
+        });
+
         carTypes_box.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
             selectedCarType = carTypes_box.getSelectionModel().getSelectedIndex();
             if(newValue.equals("New Type")){
@@ -319,8 +297,9 @@ public class AdminController {
         });
 
         carTypes_box.setItems(carTypes_list);
-        from_choice.setItems(fromStations);
-        to_choice.setItems(toStations);
+        connections_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedConnection = connections_list.getSelectionModel().getSelectedIndex();
+        });
 
     }
 
@@ -330,20 +309,20 @@ public class AdminController {
         }
         return false;
     }
-    public void u_buttonClicked(){
+    public void editUsernameButtonClicked(){
 
-        if(u_button.getText().equals("Edit")){
-            u_button.setText("Ok");
-            u_field.setText(username_text.getText());
-            u_field.setVisible(true);
+        if(edit_username_button.getText().equals("Edit")){
+            edit_username_button.setText("Ok");
+            username_field.setText(username_text.getText());
+            username_field.setVisible(true);
         }
 
         else {
-            u_button.setText("Edit");
+            edit_username_button.setText("Edit");
 
             //change the users username in database
             try {
-                Client.dummyData.changeUsername(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), u_field.getText());
+                Client.dummyData.changeUsername(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), username_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){
@@ -351,28 +330,28 @@ public class AdminController {
             }
 
             username_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername());
-            items.set(user_list.getSelectionModel().getSelectedIndex(),u_field.getText());
-            u_field.setVisible(false);
+            items.set(user_list.getSelectionModel().getSelectedIndex(), username_field.getText());
+            username_field.setVisible(false);
 
         }
 
 
 
     }
-    public void n_buttonClicked(){
-        if(n_button.getText().equals("Edit")){
-            n_button.setText("Ok");
-            n_field.setText(name_text.getText());
-            n_field.setVisible(true);
+    public void editNameButtonClicked(){
+        if(edit_name_button.getText().equals("Edit")){
+            edit_name_button.setText("Ok");
+            name_field.setText(name_text.getText());
+            name_field.setVisible(true);
         }
 
         else {
 
-            n_button.setText("Edit");
+            edit_name_button.setText("Edit");
 
             //change the users name in database
             try {
-                Client.dummyData.changeName(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), n_field.getText());
+                Client.dummyData.changeName(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), name_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){
@@ -380,63 +359,64 @@ public class AdminController {
             }
 
             name_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getName());
-            n_field.setVisible(false);
+            name_field.setVisible(false);
 
         }
 
 
 
     }
-    public void p_buttonClicked(){
-        if(p_button.getText().equals("Edit")){
-            p_button.setText("Ok");
-            p_field.setText(password_text.getText());
-            p_field.setVisible(true);
+    public void editPasswordButtonClicked(){
+        if(edit_password_button.getText().equals("Edit")){
+            edit_password_button.setText("Ok");
+            password_field.setText(password_text.getText());
+            password_field.setVisible(true);
         }
 
         else {
 
-            p_button.setText("Edit");
+            edit_password_button.setText("Edit");
             //change the users password in database
             try {
-                Client.dummyData.changePassword(users.get(user_list.getSelectionModel().getSelectedIndex()).getUsername(), p_field.getText());
+                Client.dummyData.changePassword(users.get(selectedUser).getUsername(), password_field.getText());
                 users = Client.dummyData.getUsers();
             }
             catch (Exception e){
                 e.printStackTrace();
             }
             password_text.setText(users.get(user_list.getSelectionModel().getSelectedIndex()).getPassword());
-            p_field.setVisible(false);
+            password_field.setVisible(false);
 
         }
 
 
     }
-    public void edit_connection_buttonClicked(){
-        if (edit_connection.getText().equals("Edit")){
-            edit_connection.setText("Ok");
-            from_choice.setVisible(true);
-            to_choice.setVisible(true);
+    public void editAddressButtonClicked(){
+        if(edit_address_button.getText().equals("Edit")){
+            edit_address_button.setText("Ok");
+            address_field.setText(address_text.getText());
+            address_field.setVisible(true);
         }
+
         else {
-            edit_connection.setText("Edit");
-            from_choice.setVisible(false);
-            to_choice.setVisible(false);
+
+            edit_address_button.setText("Edit");
+            //change the users password in database
+            try {
+                Client.dummyData.changeAddress(users.get(selectedUser).getUsername(), address_field.getText());
+                users = Client.dummyData.getUsers();  
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            address_text.setText(users.get(selectedUser).getAddress());
+            address_field.setVisible(false);
 
         }
+
 
     }
-    public void edit_date_buttonClicked(){
-        if(edit_date.getText().equals("Edit")){
-            edit_date.setText("Ok");
-            pick_date.setVisible(true);
-        }
-        else{
-            edit_date.setText("Edit");
-            pick_date.setVisible(false);
-        }
 
-    }
 
     public void onTabChange(){
         setlists();
@@ -537,7 +517,7 @@ public class AdminController {
         wheelchair_seats.setText(""+wheelchairSeats);
 
     }
-    public void setlists(){
+    public static void setlists(){
         try {
             users = Client.dummyData.getUsers();
             journeys = Client.dummyData.getPurchases();
@@ -550,14 +530,88 @@ public class AdminController {
         }
 
     }
-    public void addConnectionClicked(){
-
-
-
+    public void addConnectionClicked() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/FXML/add_connection_screen.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("New Connection");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Client.adminScreen.getWindow());
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+        public void removeConnectionClicked(){
+
+            String selection = connection_items.get(selectedConnection);
+            int index = searchConnectionIndex(selection);
+
+            try{
+                Client.dummyData.removeConnection(index);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            connection_items.remove(selectedConnection);
+            connections_list.setItems(connection_items);
+            setlists();
+
+        }
+
+
     public static int getSelectedStation(){
         return selectedStation;
     }
+    private int searchConnectionIndex(String s){
+        int i = 0;
+        for(Connection connection : connections){
+            if(connection.getFrom().equals(stations[selectedStation]) && connection.getTo().toString().equals(s)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+
+    }
+    public void deleteJourneyClicked(){
+        journey_items.remove(selectedJourney);
+        journey_list.setItems(journey_items);
+        try{
+            Client.dummyData.removeJourney(selectedJourney);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        setlists();
+
+    }
+    public String calculateSeats(){
+        int totalSeats = 0;
+        int reserved = 0;
+        List<Car> cars = journeys.get(selectedJourney).getTrip().getTrain().getCars();
+        ArrayList<Seat> seats = new ArrayList<>();
+        for(Car car:cars){
+            totalSeats += car.getSeatAmount();
+            seats = car.getSeats();
+            for(Seat seat : seats){
+                if(!seat.isFree()){
+                    reserved++;
+                }
+            }
+        }
+        return ""+ reserved + "/" + totalSeats;
+
+    }
+    public void goToUserScreen(){
+        try{controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/user_screen.fxml"))));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 

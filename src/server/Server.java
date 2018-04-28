@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -327,5 +328,27 @@ public class Server implements DummyData {
     @Override
     public ArrayList<Connection> getConnections() throws RemoteException{
         return connections;
+    }
+    @Override
+    public void addConnection(Connection connection) throws RemoteException{
+        connections.add(connection);
+        for(LocalTime time : connection.getTimes()) {
+            trips.add(new Trip(trains.get(trains.size() - 1), connection, LocalDate.now(), time));
+        }
+    }
+    @Override
+    public void removeConnection(int i) throws RemoteException{
+        for(int j = 0; j<trips.size(); j++){
+            if(trips.get(j).getConnection().equals(connections.get(i))){
+                trips.remove(j);
+                j--;
+            }
+        }
+        connections.remove(i);
+    }
+    @Override
+    public void removeJourney(int i) throws RemoteException{
+        purchases.get(i).getTrip().getTrain().getCars().get(purchases.get(i).getCarNumber()).getSeats().get(purchases.get(i).getSeatNumber()).setFree(true);
+        purchases.remove(i);
     }
 }
