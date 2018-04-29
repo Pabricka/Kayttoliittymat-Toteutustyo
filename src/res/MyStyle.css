@@ -21,6 +21,7 @@
 .tab{
     -fx-background-color:#f5cd79 ;
     -fx-border-color:#f7d794 ;
+    -fx-border-radius: 5;
 }
 .pane{
     -fx-background-color: #e0f2ff;
@@ -54,9 +55,11 @@
 .text-field{
     -fx-background-color: EEEEEE;
 }
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
 .scroll-pane {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
+    -fx-background-color:FDE3A7 ;
 }
 
 

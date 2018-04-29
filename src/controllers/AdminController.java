@@ -163,7 +163,7 @@ public class AdminController {
         selectedTrain = -1;
         selectedUser = -1;
 
-
+        //listener for sort_box
         sort_box.getItems().removeAll(sort_box.getItems());
         sort_box.getItems().addAll("user", "date", "connection");
         sort_box.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -210,7 +210,7 @@ public class AdminController {
             station_items.add(station.toString());
         }
 
-
+        //listener for stations_list
         trains_list.setItems(train_items);
         user_list.setItems(items);
         journey_list.setItems(journey_items);
@@ -229,7 +229,7 @@ public class AdminController {
 
         });
 
-
+        //listener for trains_list
         trains_list.setItems(train_items);
         trains_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedTrain = trains_list.getSelectionModel().getSelectedIndex();
@@ -245,6 +245,7 @@ public class AdminController {
 
 
             });
+        //listener for cars_list
         cars_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 selectedCar = cars_list.getSelectionModel().getSelectedIndex();
 
@@ -252,7 +253,7 @@ public class AdminController {
         );
 
 
-
+        //listener for users_list
         user_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedUser = user_list.getSelectionModel().getSelectedIndex();
                     username_text.setText(users.get(selectedUser).getUsername());
@@ -266,6 +267,7 @@ public class AdminController {
 
                 }
         );
+        //listener for journey_list
         journey_list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedJourney = journey_list.getSelectionModel().getSelectedIndex();
             delete_journey.setVisible(true);
@@ -277,7 +279,7 @@ public class AdminController {
             engine_text.setText(journeys.get(selectedJourney).getTrip().getTrain().getEngine());
 
         });
-
+        //listener for carTypes_box
         carTypes_box.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
             selectedCarType = carTypes_box.getSelectionModel().getSelectedIndex();
             if(newValue.equals("New Type")){
@@ -303,12 +305,9 @@ public class AdminController {
 
     }
 
-    private boolean isStationInList(Station station, List<String> stations){
-        for(String s : stations){
-            if(station.toString().equals(s)) return true;
-        }
-        return false;
-    }
+    /**
+     * checks which text the button contains and based on that either shows a text field or changes the username on both client and server
+     */
     public void editUsernameButtonClicked(){
 
         if(edit_username_button.getText().equals("Edit")){
@@ -338,6 +337,9 @@ public class AdminController {
 
 
     }
+    /**
+     * checks which text the button contains and based on that either shows a text field or changes the name on both client and server
+     */
     public void editNameButtonClicked(){
         if(edit_name_button.getText().equals("Edit")){
             edit_name_button.setText("Ok");
@@ -366,6 +368,9 @@ public class AdminController {
 
 
     }
+    /**
+     * checks which text the button contains and based on that either shows a text field or changes the password on both client and server
+     */
     public void editPasswordButtonClicked(){
         if(edit_password_button.getText().equals("Edit")){
             edit_password_button.setText("Ok");
@@ -391,6 +396,9 @@ public class AdminController {
 
 
     }
+    /**
+     * checks which text the button contains and based on that either shows a text field or changes the address on both client and server
+     */
     public void editAddressButtonClicked(){
         if(edit_address_button.getText().equals("Edit")){
             edit_address_button.setText("Ok");
@@ -417,7 +425,9 @@ public class AdminController {
 
     }
 
-
+    /**
+     * updates all lists when tab is changed
+     */
     public void onTabChange(){
         setlists();
         items.clear();
@@ -439,6 +449,10 @@ public class AdminController {
             carTypes_list.add("New Type");
 
     }
+
+    /**
+     * removes selected car from the selected train and then replaces the train on the server
+     */
     public void removeCarButtonClicked(){
         System.out.println(selectedTrain);
             System.out.println(selectedCar);
@@ -461,6 +475,9 @@ public class AdminController {
 
 
     }
+    /**
+     * adds a car to the selected train and then replaces the train on the server
+     */
     public void addCarButtonClicked(){
         trains.get(selectedTrain).addCar(carTypes.get(selectedCarType));
         try {
@@ -478,6 +495,10 @@ public class AdminController {
         setSeatInfo();
 
     }
+
+    /**
+     * changes the engine of the selected train and replaces the train on the server
+     */
     public void editEngineButtonClicked(){
         if(editEngine.getText().equals("Edit")){
             editEngine.setText("Ok");
@@ -503,6 +524,10 @@ public class AdminController {
         }
 
     }
+
+    /**
+     * Sets seat information
+     */
     public void setSeatInfo(){
         engine.setText(trains.get(selectedTrain).getEngine());
         int seats = trains.get(selectedTrain).getSeats();
@@ -517,6 +542,10 @@ public class AdminController {
         wheelchair_seats.setText(""+wheelchairSeats);
 
     }
+
+    /**
+     * retrieves lists from the server
+     */
     public static void setlists(){
         try {
             users = Client.dummyData.getUsers();
@@ -530,6 +559,10 @@ public class AdminController {
         }
 
     }
+
+    /**
+     * Opens add_connection_screen as a new window
+     */
     public void addConnectionClicked() {
         Parent root;
         try {
@@ -544,7 +577,11 @@ public class AdminController {
             e.printStackTrace();
         }
     }
-        public void removeConnectionClicked(){
+
+    /**
+     * removes a connection from the connection list on both client and server
+     */
+    public void removeConnectionClicked(){
 
             String selection = connection_items.get(selectedConnection);
             int index = searchConnectionIndex(selection);
@@ -560,7 +597,9 @@ public class AdminController {
 
         }
 
-
+    /**
+     * @return index of the currently selected station on station_list
+     */
     public static int getSelectedStation(){
         return selectedStation;
     }
@@ -575,6 +614,10 @@ public class AdminController {
         return -1;
 
     }
+
+    /**
+     * removes the selected journey from both client and server
+     */
     public void deleteJourneyClicked(){
         journey_items.remove(selectedJourney);
         journey_list.setItems(journey_items);
@@ -586,6 +629,11 @@ public class AdminController {
         setlists();
 
     }
+
+    /**
+     * calculates the amount of seats a certain train has and how many of them are reserved
+     * @return String with information of how many seats are reserved from the total amount of seats
+     */
     public String calculateSeats(){
         int totalSeats = 0;
         int reserved = 0;
@@ -603,6 +651,10 @@ public class AdminController {
         return ""+ reserved + "/" + totalSeats;
 
     }
+
+    /**
+     * Sets the scene to user_screen
+     */
     public void goToUserScreen(){
         try{controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/user_screen.fxml"))));
         }catch (Exception e){

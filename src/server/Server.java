@@ -273,6 +273,15 @@ public class Server implements DummyData {
         purchases.add(p);
     }
 
+    /**
+     * creates a temporary reservation
+     * @param trip the trip that the reservation will be on
+     * @param car the car where the seat is that is reserved
+     * @param seat the seat that is reserved
+     * @param reservation will seat be reserved of freed
+     * @throws RemoteException might occur from communication problems
+     */
+
     @Override
     public void temporalReservation(Trip trip, int car, int seat, boolean reservation) throws RemoteException {
         System.out.println("Reserving...");
@@ -346,6 +355,12 @@ public class Server implements DummyData {
     public ArrayList<Connection> getConnections() throws RemoteException{
         return connections;
     }
+
+    /**
+     *
+     * @param connection that user wants to add to the database
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void addConnection(Connection connection) throws RemoteException{
         connections.add(connection);
@@ -353,6 +368,12 @@ public class Server implements DummyData {
             trips.add(new Trip(trains.get(trains.size() - 1), connection, LocalDate.now(), time));
         }
     }
+
+    /**
+     * removes a connection and the trips with that connection
+     * @param i the index of the connection that will be deleted
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void removeConnection(int i) throws RemoteException{
         for(int j = 0; j<trips.size(); j++){
@@ -363,6 +384,12 @@ public class Server implements DummyData {
         }
         connections.remove(i);
     }
+
+    /**
+     * removes the selected purchase
+     * @param i index of the purchase that shall be deleted
+     * @throws RemoteException might occur from communication problems
+     */
     @Override
     public void removeJourney(int i) throws RemoteException{
         purchases.get(i).getTrip().getTrain().getCars().get(purchases.get(i).getCarNumber()).getSeats().get(purchases.get(i).getSeatNumber()).setFree(true);

@@ -77,7 +77,11 @@ public class ConnectionController {
 
 
         }
-        public void addClicked(){
+
+    /**
+     * checks if the time is valid and adds it to the list of times if it is
+     */
+    public void addClicked(){
         String time = departures_field.getText();
         if((time.charAt(2)==':')&&(time.length()==5)&&(isNumeric(time.substring(0,2)))&&(isNumeric(time.substring(3)))){
             String hours = time.substring(0,2);
@@ -94,7 +98,11 @@ public class ConnectionController {
         departures_list.setItems(departure_items);
 
         }
-        public void confirmClicked(){
+
+    /**
+     * checks that all fields are ok and ads a new connection to the server
+     */
+    public void confirmClicked(){
         ArrayList<LocalTime> departs = new ArrayList<>();
         String length = length_field.getText();
         String price = price_field.getText();
@@ -124,7 +132,11 @@ public class ConnectionController {
 
 
         }
-        public void cancelClicked(){
+
+    /**
+     * closes the window
+     */
+    public void cancelClicked(){
             Stage stage = (Stage) confirm_button.getScene().getWindow();
             stage.close();
         }
@@ -139,6 +151,11 @@ public class ConnectionController {
         System.out.println("true");
         return true;
     }
+
+    /**
+     * searches for the selected destination on the stations list
+     * @return the index of the station on the stations list
+     */
     private int searchStation(){
         int i = 0;
         for(Station station: stations){
