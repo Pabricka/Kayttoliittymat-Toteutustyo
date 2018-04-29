@@ -1,62 +1,64 @@
 .root{
-    -fx-background-color: #e0f2ff;
+    -fx-background-color:FDE3A7;
     -fx-text-fill: #48709c;
 }
 .button{
-    -fx-background-color: #c7d7f9;
-    -fx-text-fill: #354c7c;
-    -fx-border-color: #ddeff6;
+    -fx-background-color: fabe58;
+    -fx-text-fill: #000000;
+    -fx-border-color: F4B350;
     -fx-border-radius: 5;
 }
 .label {
-    -fx-text-fill: #354c7c;
+    -fx-text-fill: #303952;
 }
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color:#c7d7f9 ;
+    -fx-background-color:#f5cd79 ;
 }
 
 .tab-pane .tab:selected{
-    -fx-background-color:#e0f2ff;
+    -fx-background-color:FDE3A7;
 }
 .tab{
-    -fx-background-color:#c7d7f9 ;
+    -fx-background-color:#f5cd79 ;
+    -fx-border-color:#f7d794 ;
 }
 .pane{
     -fx-background-color: #e0f2ff;
 }
 .list-view {
-    -fx-background-color: #fafcff;
+    -fx-background-color: #f7d794;
 }
 
 .list-cell:filled:selected:focused {
-    -fx-background-color: #294169;
-    -fx-text-fill: #eff5f6 ;
+    -fx-background-color: fabe58;
+    -fx-text-fill: #000000 ;
 }
 .list-cell:even{
-    -fx-background-color:#fafcff ;
+    -fx-background-color:#f7d794 ;
 }
 .list-cell:odd{
-    -fx-background-color:#e7edf9 ;
+    -fx-background-color:#f5cd79 ;
 }
 .combo-box{
-    -fx-background-color: #c7d7f9;
-    -fx-text-fill: #354c7c;
-    -fx-border-color: #ddeff6;
+    -fx-background-color: fabe58;
+    -fx-text-fill: #000000;
+    -fx-border-color: F4B350;
     -fx-border-radius: 5;
 }
 .choice-box{
-    -fx-background-color: #c7d7f9;
-    -fx-text-fill: #354c7c;
-    -fx-border-color: #ddeff6;
+    -fx-background-color: fabe58;
+    -fx-text-fill: #000000;
+    -fx-border-color: F4B350;
     -fx-border-radius: 5;
 }
 .text-field{
-    -fx-background-color: #fafcff;
+    -fx-background-color: EEEEEE;
 }
 .scroll-pane {
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
+
 
 
 
