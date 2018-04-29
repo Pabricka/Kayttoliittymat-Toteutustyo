@@ -50,7 +50,7 @@ public class OrderController {
 
     private Trip trip;
     private List<Car> cars;
-    private int car;
+    public static int car;
 
     public void initialize() {
         trip = Client.session.getSelectedTrip();
@@ -134,10 +134,13 @@ public class OrderController {
     public void ResetSelectedSeats(){
 
         //clear temporal reservations
-        for(Car c : cars){
-            for(Seat s : c.getSeats()){
-                s.setTemporalReservation(false);
+        try {
+            for (int i = 0; i < Client.session.getSelectedCars().size(); i++) {
+                cars.get(Client.session.getSelectedCars().get(i)).getSeats().get(Client.session.getSelectedSeats().get(i)).setTemporalReservation(false);
+                Client.dummyData.temporalReservation(trip,Client.session.getSelectedCars().get(i), Client.session.getSelectedSeats().get(i), false);
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         //clear selected seats from session and redraw car
         Client.session.getSelectedSeats().clear();
@@ -167,8 +170,21 @@ public class OrderController {
         //If okay, go back to trips screen
         if (result.get() == ButtonType.OK) {
             try {
+
+                //clear reserved seats first
+                try {
+                    for (int i = 0; i < Client.session.getSelectedCars().size(); i++) {
+                        cars.get(Client.session.getSelectedCars().get(i)).getSeats().get(Client.session.getSelectedSeats().get(i)).setTemporalReservation(false);
+                        Client.dummyData.temporalReservation(trip,Client.session.getSelectedCars().get(i), Client.session.getSelectedSeats().get(i), false);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 Client.session.getSelectedSeats().clear();
                 Client.session.getSelectedCars().clear();
+
+
                 controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/display_trips_screen.fxml"))));
             } catch (Exception ex) {
                 ex.printStackTrace();

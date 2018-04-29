@@ -30,4 +30,5 @@ public interface DummyData extends Remote {
     void addConnection(Connection connection) throws RemoteException;
     void removeConnection(int i) throws RemoteException;
     void removeJourney(int i)throws RemoteException;
+    void temporalReservation(Trip trip, int car, int seat, boolean reservation) throws RemoteException;
 }

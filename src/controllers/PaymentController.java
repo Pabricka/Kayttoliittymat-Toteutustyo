@@ -200,13 +200,17 @@ public class PaymentController {
                 } catch (Exception exc) {
                     exc.printStackTrace();
                 }
+            }
+            //clear selected seats
+            Client.session.getSelectedSeats().clear();
+            Client.session.getSelectedCars().clear();
                 //Move to the success screen
                 try {
                     controllers.Client.stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/FXML/success_screen.fxml"))));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            }
+
 
         });
     }

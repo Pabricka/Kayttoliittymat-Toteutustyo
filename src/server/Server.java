@@ -7,7 +7,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -34,10 +33,10 @@ public class Server implements DummyData {
         carTypes = new ArrayList<>();
         stations = Station.values();
 
-        //create the dummydata
+        //create dummydata
         initializeDummyData();
 
-        /**
+        /*
          * open the RMI server and listen to port 1099
          */
         try {
@@ -265,8 +264,26 @@ public class Server implements DummyData {
      */
     @Override
     public void newPurchase(Purchase p) throws RemoteException {
+        for(Trip t : trips){
+            if(t.getTrain().getEngine().equals(p.getTrip().getTrain().getEngine())){
+                t.getTrain().getCars().get(p.getCarNumber()).getSeats().get(p.getSeatNumber()).setTemporalReservation(false);
+                t.getTrain().getCars().get(p.getCarNumber()).getSeats().get(p.getSeatNumber()).setFree(false);
+            }
+        }
         purchases.add(p);
     }
+
+    @Override
+    public void temporalReservation(Trip trip, int car, int seat, boolean reservation) throws RemoteException {
+        System.out.println("Reserving...");
+        for(Trip t : trips){
+            if(t.getTrain().getEngine().equals(trip.getTrain().getEngine())){
+                t.getTrain().getCars().get(car).getSeats().get(seat).setTemporalReservation(reservation);
+                System.out.println("Seat reserved:" + trip.toString() + car + " " + seat);
+            }
+        }
+    }
+
 
     /**
      * @return all car types in the database

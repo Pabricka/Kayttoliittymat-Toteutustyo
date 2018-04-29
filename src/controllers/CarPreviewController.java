@@ -132,9 +132,14 @@ public class CarPreviewController {
                         if(Client.session.getPassengers() > Client.session.getSelectedSeats().size()) {
                             btn.setGraphic(new ImageView(selected));
                             Client.session.addSelectedSeat(Integer.parseInt(btn.getId()));
-                            Client.session.addSelectedCar(Integer.parseInt(btn.getId()));
-                            s.setTemporalReservation(true);
+                            Client.session.addSelectedCar(OrderController.car);
                             btn.setDisable(true);
+                            try{
+                                Client.dummyData.temporalReservation(Client.session.getSelectedTrip(), OrderController.car, Integer.parseInt(btn.getId()), true);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            s.setTemporalReservation(true);
                         }
                     });
                 }
